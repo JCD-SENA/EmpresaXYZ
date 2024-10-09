@@ -44,6 +44,7 @@ public class VentanaRegistro extends JDialog  implements ActionListener{
         campoTelefono = new javax.swing.JTextField();
         campoProfesion = new javax.swing.JTextField();
         campoDocumento = new javax.swing.JTextField();
+        campoTipo = new javax.swing.JTextField();
         campoEdad = new javax.swing.JTextField();
         separadorSuperior = new javax.swing.JSeparator();
         btonCancelar = new javax.swing.JButton();
@@ -149,6 +150,7 @@ public class VentanaRegistro extends JDialog  implements ActionListener{
     private javax.swing.JTextField campoEdad;
     private javax.swing.JTextField campoNombre;
     private javax.swing.JTextField campoProfesion;
+    private javax.swing.JTextField campoTipo;
     private javax.swing.JLabel tituloRegistro;
     private javax.swing.JLabel labelDocumento;
     private javax.swing.JLabel labelEdad;
@@ -179,6 +181,7 @@ public class VentanaRegistro extends JDialog  implements ActionListener{
 	private void registrar() {
 		
 		Integer edad=miCoordinador.validarEdad(campoEdad.getText().trim());
+                Integer tipo = 2;
 		
 		if (edad!=null) {
 			
@@ -188,7 +191,8 @@ public class VentanaRegistro extends JDialog  implements ActionListener{
 			miUsuarioVo.setEdad(edad);
 			miUsuarioVo.setProfesion(campoProfesion.getText().trim());
 			miUsuarioVo.setDireccion(campoDireccion.getText().trim());
-			miUsuarioVo.setTelefono(campoTelefono.getText().trim());		
+			miUsuarioVo.setTelefono(campoTelefono.getText().trim());
+                        miUsuarioVo.setTipo(tipo);
 			
 			String retorno="";
 			if (miCoordinador.validarCampos(miUsuarioVo)) {

@@ -6,13 +6,18 @@ import java.awt.FlowLayout;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import controlador.Coordinador;
 
@@ -20,33 +25,36 @@ import controlador.Coordinador;
  *
  * @author User
  */
-public class VentanaPrincipal extends JFrame implements ActionListener {
+public class VentanaPrincipal extends JFrame implements ActionListener, WindowListener {
+    private JButton botonConsultar;
+    private JButton botonRegistrar;
+    private JLabel labelTitulo,labelInferior;
+    private JPanel miPanelPrincipal,panelTitulo,panelInferior;
 
-	  private javax.swing.JButton botonConsultar;
-	  private javax.swing.JButton botonRegistrar;
-	  private javax.swing.JLabel labelTitulo,labelInferior;
-	  private javax.swing.JPanel miPanelPrincipal,panelTitulo,panelInferior;
-	  
-	  private JMenuBar barraMenu;
-	  private JMenu menu;
-	  private JMenuItem itemOpciones;
-  
-	  private Dimension tamPantalla;
-	  private Rectangle pantalla;
-	  
-	  private Coordinador miCoordinador;
+    private JMenuBar barraMenu;
+    private JMenu menu;
+    private JMenuItem itemOpciones;
+
+    private Dimension tamPantalla;
+    private Rectangle pantalla;
+    
+    private int largo, ancho;
+
+    private Coordinador miCoordinador;
 	
 	
     /**
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
+        this.tamPantalla=Toolkit.getDefaultToolkit().getScreenSize();
+        this.pantalla= new Rectangle(tamPantalla);
+        this.ancho = (int)tamPantalla.getWidth();
+        this.largo = (int)tamPantalla.getHeight();
         initComponents();
         setTitle("Ventana Principal");
         setSize(650, 350);
         setLocationRelativeTo(null);
-        tamPantalla=Toolkit.getDefaultToolkit().getScreenSize();
-        pantalla= new Rectangle(tamPantalla);
         setBounds(pantalla);
     }
 
@@ -68,10 +76,12 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
         botonRegistrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        
  //       getContentPane().setLayout(null);
 
         miPanelPrincipal.setBackground(Color.lightGray);
         miPanelPrincipal.setLayout(null);
+        this.addWindowListener(this);
         
         panelTitulo.setBackground(Color.black);
         panelInferior.setBackground(Color.black);
@@ -119,49 +129,64 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
         setJMenuBar(barraMenu);
   
         miPanelPrincipal.setBounds(0, 0, 670, 350);
-        panelTitulo.setBounds(0, 0, 1500, 70);
-        panelInferior.setBounds(0, 667, 1350,40);
+        panelTitulo.setBounds(0, 0, this.ancho, 70);
+        
+        panelInferior.setBounds(0, this.largo - 130, this.ancho-14,46);
         miPanelPrincipal.add(panelTitulo);
         miPanelPrincipal.add(panelInferior);
         getContentPane().add(miPanelPrincipal);
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-	public void setCoordinador(Coordinador miCoordinador) {
-		this.miCoordinador=miCoordinador;
-	}
+    public void setCoordinador(Coordinador miCoordinador) {
+        this.miCoordinador=miCoordinador;
+    }
 
-	public void asignarPrivilegios(String usuario) {
-		labelTitulo.setText("Bienvenido : "+usuario);
-		
-		if (usuario.equals("Administrador")) {
-			botonConsultar.setVisible(true);
-			botonRegistrar.setVisible(true);
-		}else{
-			botonConsultar.setVisible(false);
-			botonRegistrar.setVisible(true);
-		}
-		
-	}
+    public void asignarPrivilegios(String usuario) {
+        labelTitulo.setText("Bienvenido : "+usuario);
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource()==itemOpciones) {
-			miCoordinador.mostrarLogin();			
-		}
-		
-		if (e.getSource()==botonRegistrar) {
-			miCoordinador.mostrarVentanaRegistro();			
-		}
-		
-		if (e.getSource()==botonConsultar) {
-			miCoordinador.mostrarVentanaConsulta();			
-		}
-		
-	}
+        if (usuario.equals("Administrador")) {
+            botonConsultar.setVisible(true);
+            botonRegistrar.setVisible(true);
+        }else{
+            botonConsultar.setVisible(false);
+            botonRegistrar.setVisible(true);
+        }
 
+    }
 
+    @Override
+    public void windowClosing (WindowEvent e) {
+        //Que se desconecte cuando se cierre el programa
+        this.miCoordinador.getConexion().desconectar();
+        dispose();
+    }
+    
+    @Override
+    public void windowClosed(WindowEvent e) {
+        //Que se desconecte cuando se cierre el programa
+        this.miCoordinador.getConexion().desconectar();
+        dispose();
+    }
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource()==itemOpciones) {
+            miCoordinador.mostrarLogin();			
+        }
 
-  
+        if (e.getSource()==botonRegistrar) {
+            miCoordinador.mostrarVentanaRegistro();			
+        }
 
+        if (e.getSource()==botonConsultar) {
+            miCoordinador.mostrarVentanaConsulta();			
+        }
+    }
+    
+    public void windowActivated(WindowEvent e) {}     
+    public void windowDeactivated(WindowEvent e) {}
+    public void windowDeiconified(WindowEvent e) {}
+    public void windowIconified(WindowEvent e) {} 
+    public void windowOpened(WindowEvent arg0) {}
 }

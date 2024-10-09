@@ -13,25 +13,25 @@ public class Conexion {
 	Connection conn=null;
 	//constructor de la clase
 	public Conexion(){
-		try {
-			//obtener el driver
-			Class.forName("com.mysql.jdbc.Driver");
-			//obtener la conexion
-			conn=DriverManager.getConnection(url,usuario,password);
-			if (conn!=null) {
-				System.out.println("Conexion Exitosa  a la BD: "+nombreBd);
-			}
-		} catch (ClassNotFoundException e) {
-			System.out.println("ocurre una ClassNotFoundException : "+e.getMessage());
-		} catch (SQLException e) {
-			System.out.println("ocurre una SQLException: "+e.getMessage());
-		}
+            try {
+                //obtener el driver
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                //obtener la conexion
+                conn=DriverManager.getConnection(url,usuario,password);
+                if (conn!=null) {
+                        System.out.println("Conexion Exitosa  a la BD: "+nombreBd);
+                }
+            } catch (ClassNotFoundException e) {
+                System.out.println("ocurre una ClassNotFoundException : "+e.getMessage());
+            } catch (SQLException e) {
+                System.out.println("ocurre una SQLException: "+e.getMessage());
+            }
 	}
 	public Connection getConnection(){
-		return conn;
+            return conn;
 	}
 	public void desconectar(){
-		conn=null;
+            conn=null;
 	}
 }
 

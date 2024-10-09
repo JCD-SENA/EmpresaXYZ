@@ -1,7 +1,6 @@
 vista\VentanaRegistro.class
 vista\VentanaConsultaIndividual.class
 modelo\dao\UsuarioDao.class
-vista\VentanaLogin$1.class
 controlador\Principal.class
 modelo\conexion\Conexion.class
 modelo\vo\UsuarioVo.class

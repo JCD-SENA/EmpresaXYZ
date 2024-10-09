@@ -16,145 +16,131 @@ import modelo.vo.UsuarioVo;
 import controlador.Coordinador;
 
 public class UsuarioDao {
-	
-	private Coordinador miCoordinador;
+    private Coordinador miCoordinador;
 
-	public void setCoordinador(Coordinador miCoordinador) {
-		this.miCoordinador=miCoordinador;
-	}
+    public void setCoordinador(Coordinador miCoordinador) {
+        this.miCoordinador=miCoordinador;
+    }
 
-	public String registrarUsuario(UsuarioVo miUsuarioVo) {
-		String resultado="";
-			
-		Connection connection=null;
-		Conexion conexion=new Conexion();
-		PreparedStatement preStatement=null;
-		
-		connection=conexion.getConnection();
-		String consulta="INSERT INTO usuario (documento,nombre,profesion,edad,direccion,telefono)" +
-				" VALUES (?,?,?,?,?,?)";
-		
-		try {
-			preStatement = connection.prepareStatement(consulta);
-			preStatement.setString(1, miUsuarioVo.getDocumento());
-			preStatement.setString(2,miUsuarioVo.getNombre());
-			preStatement.setString(3,miUsuarioVo.getProfesion());
-			preStatement.setInt(4, miUsuarioVo.getEdad());
-			preStatement.setString(5, miUsuarioVo.getDireccion());
-			preStatement.setString(7, miUsuarioVo.getTelefono());
-			preStatement.execute();
-			
-			resultado="ok";
-			
-		} catch (SQLException e) {
-			System.out.println("No se pudo registrar el dato: "+e.getMessage());
-			e.printStackTrace();
-			resultado="error";
-		}
-		
-		conexion.desconectar();
-		   
-		return resultado;
-	}
+    public String registrarUsuario(UsuarioVo miUsuarioVo) {
+        String resultado="";
 
-	public UsuarioVo consultarUsuario(String doc) {
-		Connection connection=null;
-		Conexion miConexion=new Conexion();
-		PreparedStatement statement=null;
-		ResultSet result=null;
-		
-		UsuarioVo miUsuario=new UsuarioVo();
-		
-		connection=miConexion.getConnection();
-		
-		String consulta="SELECT * FROM usuario where documento = ?";
-		ArrayList<UsuarioVo> listUser=new ArrayList<UsuarioVo>();
-		try {
-			if (connection!=null) {
-				statement=connection.prepareStatement(consulta);
-				statement.setString(1, doc);
-				
-				result=statement.executeQuery();
-				
-				while(result.next()==true){
-					miUsuario=new UsuarioVo();
-					miUsuario.setDocumento(result.getString("documento"));
-					miUsuario.setNombre(result.getString("nombre"));
-					miUsuario.setProfesion(result.getString("profesion"));
-					miUsuario.setEdad(result.getInt("edad"));
-					miUsuario.setDireccion(result.getString("direccion"));
-					miUsuario.setTelefono(result.getString("telefono"));		
-					miUsuario.setTipo(result.getInt("tipo"));
-					
-					listUser.add(miUsuario);
-				}		
-				   miConexion.desconectar();
-			}else{
-				miUsuario=null;
-			}
-			
-			   
-		} catch (SQLException e) {
-			System.out.println("Error en la consulta del usuario: "+e.getMessage());
-		}
-		
-		return miUsuario;
-	}
+        Connection connection=null;
+        Conexion conexion= this.miCoordinador.getConexion();
+        PreparedStatement preStatement=null;
 
-	public String actualizaUsuario(UsuarioVo miUsuarioVo) {
-		String resultado="";
-		Connection connection=null;
-		Conexion miConexion=new Conexion();
-		connection=miConexion.getConnection();
-		try{
-			String consulta="UPDATE usuario SET documento= ? ,nombre = ? , profesion=? , edad=? , direccion=? ,telefono= ? WHERE documento= ? ";
-			PreparedStatement preStatement = connection.prepareStatement(consulta);
+        connection=conexion.getConnection();
+        String consulta="INSERT INTO usuario (documento,nombre,profesion,edad,direccion,telefono,tipo)" + " VALUES (?,?,?,?,?,?,?)";
 
-			preStatement.setString(1, miUsuarioVo.getDocumento());
-			preStatement.setString(2,miUsuarioVo.getNombre());
-			preStatement.setString(3,miUsuarioVo.getProfesion());
-			preStatement.setInt(4, miUsuarioVo.getEdad());
-			preStatement.setString(5, miUsuarioVo.getDireccion());
-			preStatement.setString(6, miUsuarioVo.getTelefono());
-			preStatement.setString(7, miUsuarioVo.getDocumento());
-			preStatement.executeUpdate();
-			
-          resultado="ok";
-          
-          miConexion.desconectar();
+        try {
+            preStatement = connection.prepareStatement(consulta);
+            preStatement.setString(1, miUsuarioVo.getDocumento());
+            preStatement.setString(2,miUsuarioVo.getNombre());
+            preStatement.setString(3,miUsuarioVo.getProfesion());
+            preStatement.setInt(4, miUsuarioVo.getEdad());
+            preStatement.setString(5, miUsuarioVo.getDireccion());
+            preStatement.setString(6, miUsuarioVo.getTelefono());
+            preStatement.setInt(7, miUsuarioVo.getTipo());
+            preStatement.execute();
 
+            resultado="ok";
+        } catch (SQLException e) {
+            System.out.println("No se pudo registrar el dato: "+e.getMessage());
+            e.printStackTrace();
+            resultado="error";
+        }
+
+        return resultado;
+    }
+
+    public UsuarioVo consultarUsuario(String doc) {
+        Connection connection=null;
+        Conexion miConexion= this.miCoordinador.getConexion();
+        PreparedStatement statement=null;
+        ResultSet result=null;
+
+        UsuarioVo miUsuario=new UsuarioVo();
+
+        connection=miConexion.getConnection();
+
+        String consulta="SELECT * FROM usuario where documento = ?";
+        ArrayList<UsuarioVo> listUser=new ArrayList<UsuarioVo>();
+        try {
+            if (connection!=null) {
+                statement=connection.prepareStatement(consulta);
+                statement.setString(1, doc);
+
+                result=statement.executeQuery();
+
+                while(result.next()==true){
+                    miUsuario=new UsuarioVo();
+                    miUsuario.setDocumento(result.getString("documento"));
+                    miUsuario.setNombre(result.getString("nombre"));
+                    miUsuario.setProfesion(result.getString("profesion"));
+                    miUsuario.setEdad(result.getInt("edad"));
+                    miUsuario.setDireccion(result.getString("direccion"));
+                    miUsuario.setTelefono(result.getString("telefono"));		
+                    miUsuario.setTipo(result.getInt("tipo"));
+
+                    listUser.add(miUsuario);
+                }
+            }else{
+                miUsuario=null;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error en la consulta del usuario: "+e.getMessage());
+        }
+
+        return miUsuario;
+    }
+
+    public String actualizaUsuario(UsuarioVo miUsuarioVo) {
+        String resultado="";
+        Connection connection=null;
+        Conexion miConexion=this.miCoordinador.getConexion();
+        connection=miConexion.getConnection();
+        try{
+            String consulta="UPDATE usuario SET documento= ? ,nombre = ? , profesion=? , edad=? , direccion=? ,telefono= ? WHERE documento= ? ";
+            PreparedStatement preStatement = connection.prepareStatement(consulta);
+
+            preStatement.setString(1, miUsuarioVo.getDocumento());
+            preStatement.setString(2,miUsuarioVo.getNombre());
+            preStatement.setString(3,miUsuarioVo.getProfesion());
+            preStatement.setInt(4, miUsuarioVo.getEdad());
+            preStatement.setString(5, miUsuarioVo.getDireccion());
+            preStatement.setString(6, miUsuarioVo.getTelefono());
+            preStatement.setString(7, miUsuarioVo.getDocumento());
+            preStatement.executeUpdate();
+
+            resultado="ok";
         }catch(SQLException	 e){
             System.out.println(e);
             resultado="error";
         }
-		return resultado;
-	}
+        return resultado;
+    }
 
-	public String eliminarUsuario(String documento) {
-		Connection connection=null;
-		Conexion miConexion=new Conexion();
-		connection=miConexion.getConnection();
-		
-		String resp="";
-		try {
-			String sentencia="DELETE FROM usuario WHERE documento= ? ";
+    public String eliminarUsuario(String documento) {
+        Connection connection=null;
+        Conexion miConexion=this.miCoordinador.getConexion();
+        connection=miConexion.getConnection();
 
-			PreparedStatement statement = connection.prepareStatement(sentencia);
-			statement.setString(1, documento);
-			
-			statement.executeUpdate();
-						
-			resp="ok";
+        String resp="";
+        try {
+            String sentencia="DELETE FROM usuario WHERE documento= ? ";
+
+            PreparedStatement statement = connection.prepareStatement(sentencia);
+            statement.setString(1, documento);
+
+            statement.executeUpdate();
+
+            resp="ok";
             statement.close();
-            miConexion.desconectar();
-			
-		} catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
-			resp="error";
-		}
-		return resp;
-	}
-	
-		
-
+            resp="error";
+        }
+        return resp;
+    }
 }
