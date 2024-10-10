@@ -79,4 +79,8 @@ public class Logica {
         }			
         return edad;
     }
+    
+    public boolean validarTipoUsuario(int tipoUsuario) {
+        return (tipoUsuario >= 1 && tipoUsuario <= 2);
+    }
 }

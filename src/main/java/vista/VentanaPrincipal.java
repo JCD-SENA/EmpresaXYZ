@@ -54,6 +54,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
         initComponents();
         setTitle("Ventana Principal");
         setSize(650, 350);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         setBounds(pantalla);
     }
@@ -131,7 +132,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
         miPanelPrincipal.setBounds(0, 0, 670, 350);
         panelTitulo.setBounds(0, 0, this.ancho, 70);
         
-        panelInferior.setBounds(0, this.largo - 130, this.ancho-14,46);
+        panelInferior.setBounds(0, this.largo - 130, this.ancho,53);
         miPanelPrincipal.add(panelTitulo);
         miPanelPrincipal.add(panelInferior);
         getContentPane().add(miPanelPrincipal);
@@ -142,17 +143,21 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
         this.miCoordinador=miCoordinador;
     }
 
-    public void asignarPrivilegios(String usuario) {
-        labelTitulo.setText("Bienvenido : "+usuario);
-
-        if (usuario.equals("Administrador")) {
-            botonConsultar.setVisible(true);
-            botonRegistrar.setVisible(true);
-        }else{
-            botonConsultar.setVisible(false);
-            botonRegistrar.setVisible(true);
+    public void asignarPrivilegios(int tipo) {
+        String usuario = "";
+        switch (tipo) {
+            case 1:
+                usuario = "Administrador";
+                botonConsultar.setVisible(true);
+                botonRegistrar.setVisible(true);
+                break;
+            case 2:
+                usuario = "Usuario";
+                botonConsultar.setVisible(true);
+                botonRegistrar.setVisible(false);
+                break;
         }
-
+        labelTitulo.setText("Bienvenido : "+usuario);
     }
 
     @Override

@@ -44,11 +44,15 @@ public class Coordinador {
 	}
 
 	public void cerrarVentanaLogin() {
+            miLogin.limpiar();
             miLogin.dispose();
 	}
 
-	public void asignarPrivilegios(String usuario) {
-            miVentana.asignarPrivilegios(usuario);
+	public void asignarPrivilegios(String pass) {
+            int tipo = miUsuarioDao.consultarUsuario(pass).getTipo();
+            miVentana.asignarPrivilegios(tipo);
+            miVentanaRegistro.asignarPrivilegios(tipo);
+            miVentanaConsultaIndividual.asignarPrivilegios(tipo, pass);
 	}
 
 	public void mostrarLogin() {
@@ -83,6 +87,10 @@ public class Coordinador {
 	public boolean validarCampos(UsuarioVo miUsuarioVo) {
             return miLogica.validarCampos(miUsuarioVo);
 	}
+        
+        public boolean validarTipoUsuario(int tipoUsuario) {
+            return miLogica.validarTipoUsuario(tipoUsuario);
+        }
 
 	public Integer validarEdad(String edadIngresada) {
             // TODO Auto-generated method stub

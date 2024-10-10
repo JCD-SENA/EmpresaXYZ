@@ -153,7 +153,7 @@ public class VentanaLogin extends JDialog implements ActionListener, WindowListe
                         JOptionPane.showMessageDialog(null, "No se pudo conectar a la BD, "
                         + "verifique que se encuentre el linea","Error de Conexion",JOptionPane.ERROR_MESSAGE);
                     }else{
-                        miCoordinador.asignarPrivilegios(resp);
+                        miCoordinador.asignarPrivilegios(campoPass.getText());
                         miCoordinador.cerrarVentanaLogin();
                     }
                 }

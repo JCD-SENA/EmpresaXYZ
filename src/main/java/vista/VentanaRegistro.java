@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JComboBox;
 
 import modelo.vo.UsuarioVo;
 
@@ -22,17 +23,23 @@ public class VentanaRegistro extends JDialog  implements ActionListener{
     public VentanaRegistro(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setSize(705,330);
+        setSize(705,350);
         setResizable(false);
         setLocationRelativeTo(null);
     }
+    
+    public void asignarPrivilegios(int tipo) {
+        if (tipo == 2) {
+            comboTipo.setEnabled(false);
+        }
+    }
 
-     private void initComponents() {
-
+    private void initComponents() {
         panelRegistro = new javax.swing.JPanel();
         tituloRegistro = new javax.swing.JLabel();
         labelProfesion = new javax.swing.JLabel();
         labelTelefono = new javax.swing.JLabel();
+        labelTipo = new javax.swing.JLabel();
         labelTexto = new javax.swing.JLabel();
         labelDocumento = new javax.swing.JLabel();
         labelEdad = new javax.swing.JLabel();
@@ -49,6 +56,7 @@ public class VentanaRegistro extends JDialog  implements ActionListener{
         separadorSuperior = new javax.swing.JSeparator();
         btonCancelar = new javax.swing.JButton();
         btonAceptar = new javax.swing.JButton();
+        comboTipo = new JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
        // getContentPane().setLayout(null);
@@ -76,10 +84,10 @@ public class VentanaRegistro extends JDialog  implements ActionListener{
         labelTelefono.setBounds(400, 200, 100, 20);
 
         labelTexto.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        labelTexto.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        labelTexto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTexto.setText("Diligencie el Formulario para registrar el Usuario en el Sistema");
         panelRegistro.add(labelTexto);
-        labelTexto.setBounds(0, 90, 510, 20);
+        labelTexto.setBounds(0, 90, 705, 20);
 
         labelDocumento.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         labelDocumento.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -103,10 +111,21 @@ public class VentanaRegistro extends JDialog  implements ActionListener{
         labelNombre.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         labelNombre.setText("* Nombre:");
         
+        labelTipo.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        labelTipo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        panelRegistro.add(labelTipo);
+        labelTipo.setText("*Tipo usuario:");
+        labelTipo.setBounds(150, 230, 100, 20);
+        
+        comboTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Administrador", "Usuario"}));
+        panelRegistro.add(comboTipo);
+        comboTipo.setBounds(260, 230, 240, 20);
+        comboTipo.addActionListener(this);
+        
         panelRegistro.add(labelNombre);
         labelNombre.setBounds(0, 140, 90, 20);
         panelRegistro.add(separadorInferior);
-        separadorInferior.setBounds(20, 240, 660, 10);
+        separadorInferior.setBounds(20, 260, 660, 10);
         panelRegistro.add(campoNombre);
         campoNombre.setBounds(100, 140, 300, 20);
         panelRegistro.add(campoDireccion);
@@ -125,13 +144,13 @@ public class VentanaRegistro extends JDialog  implements ActionListener{
         btonCancelar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btonCancelar.setText("Cancelar");
         panelRegistro.add(btonCancelar);
-        btonCancelar.setBounds(570, 260, 110, 30);
+        btonCancelar.setBounds(570, 270, 110, 30);
         btonCancelar.addActionListener(this);
 
         btonAceptar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         btonAceptar.setText("Aceptar");
         panelRegistro.add(btonAceptar);
-        btonAceptar.setBounds(450, 260, 110, 30);
+        btonAceptar.setBounds(450, 270, 110, 30);
         btonAceptar.addActionListener(this);
 
         getContentPane().add(panelRegistro);
@@ -158,64 +177,73 @@ public class VentanaRegistro extends JDialog  implements ActionListener{
     private javax.swing.JLabel labelProfesion;
     private javax.swing.JLabel labelTelefono;
     private javax.swing.JLabel labelTexto;
+    private javax.swing.JLabel labelTipo;
     private javax.swing.JPanel panelRegistro;
     private javax.swing.JSeparator separadorInferior;
     private javax.swing.JSeparator separadorSuperior;
-	private Coordinador miCoordinador;
+    private Coordinador miCoordinador;
+    private JComboBox comboTipo;
 
 	
-	public void setCoordinador(Coordinador miCoordinador) {
-		this.miCoordinador=miCoordinador;
-	}
+    public void setCoordinador(Coordinador miCoordinador) {
+        this.miCoordinador=miCoordinador;
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource()==btonAceptar) {
-			registrar();
-		}
-		if (e.getSource()==btonCancelar) {
-			dispose();
-		}
-	}
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource()==btonAceptar) {
+            registrar();
+        }
+        if (e.getSource()==btonCancelar) {
+            limpiar();
+            dispose();
+        }
+    }
+    
+    private void limpiar() {
+        campoDocumento.setText("");
+        campoNombre.setText("");
+        campoEdad.setText("");
+        comboTipo.setSelectedIndex(0);
+        campoProfesion.setText("");
+        campoDireccion.setText("");
+        campoTelefono.setText("");
+    }
 
-	private void registrar() {
-		
-		Integer edad=miCoordinador.validarEdad(campoEdad.getText().trim());
-                Integer tipo = 2;
-		
-		if (edad!=null) {
-			
-			UsuarioVo miUsuarioVo=new UsuarioVo();
-			miUsuarioVo.setDocumento(campoDocumento.getText().trim());
-			miUsuarioVo.setNombre(campoNombre.getText().trim());
-			miUsuarioVo.setEdad(edad);
-			miUsuarioVo.setProfesion(campoProfesion.getText().trim());
-			miUsuarioVo.setDireccion(campoDireccion.getText().trim());
-			miUsuarioVo.setTelefono(campoTelefono.getText().trim());
-                        miUsuarioVo.setTipo(tipo);
-			
-			String retorno="";
-			if (miCoordinador.validarCampos(miUsuarioVo)) {
-				 retorno=miCoordinador.registrarUsuario(miUsuarioVo);	
-			}else{
-				retorno="mas_datos";
-			}
-			
-			if (retorno.equals("ok")) {
-				JOptionPane.showMessageDialog(null, "El usuario fue registrado con exito!!!");
-			}else{
-				if (retorno.equals("error")) {
-					JOptionPane.showMessageDialog(null, "El usuario no pudo ser registrado, verifique la traza del error!!!");	
-				}else{
-					JOptionPane.showMessageDialog(null, "Se necesitan diligenciar los campos obligatorios (*) !!!","Advertencia",JOptionPane.WARNING_MESSAGE);
-				}
-			
-		}
-		
-		}else{
-			JOptionPane.showMessageDialog(null, "Debe ingresar una edad Valida!!!","Advertencia",JOptionPane.ERROR_MESSAGE);
-		}
-		
-	}
+    private void registrar() {
+        Integer edad=miCoordinador.validarEdad(campoEdad.getText().trim());
+        if (miCoordinador.validarTipoUsuario(comboTipo.getSelectedIndex())) {
+            if (edad!=null) {		
+                UsuarioVo miUsuarioVo=new UsuarioVo();
+                miUsuarioVo.setDocumento(campoDocumento.getText().trim());
+                miUsuarioVo.setNombre(campoNombre.getText().trim());
+                miUsuarioVo.setEdad(edad);
+                miUsuarioVo.setProfesion(campoProfesion.getText().trim());
+                miUsuarioVo.setDireccion(campoDireccion.getText().trim());
+                miUsuarioVo.setTelefono(campoTelefono.getText().trim());
+                miUsuarioVo.setTipo(comboTipo.getSelectedIndex());
+                String retorno="";
+                if (miCoordinador.validarCampos(miUsuarioVo)) {
+                    retorno=miCoordinador.registrarUsuario(miUsuarioVo);	
+                }else{
+                    retorno="mas_datos";
+                }
 
+                if (retorno.equals("ok")) {
+                    JOptionPane.showMessageDialog(null, "El usuario fue registrado con exito!!!");
+                    limpiar();
+                }else{
+                    if (retorno.equals("error")) {
+                        JOptionPane.showMessageDialog(null, "El usuario no pudo ser registrado, verifique la traza del error!!!");	
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Se necesitan diligenciar los campos obligatorios (*) !!!","Advertencia",JOptionPane.WARNING_MESSAGE);
+                    }
+                }	
+            }else{
+                JOptionPane.showMessageDialog(null, "Debe ingresar una edad Valida!!!","Advertencia",JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe especificar el tipo de usuario","Advertencia",JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }

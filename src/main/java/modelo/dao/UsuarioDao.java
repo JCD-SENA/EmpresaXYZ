@@ -31,24 +31,26 @@ public class UsuarioDao {
 
         connection=conexion.getConnection();
         String consulta="INSERT INTO usuario (documento,nombre,profesion,edad,direccion,telefono,tipo)" + " VALUES (?,?,?,?,?,?,?)";
+        if (this.miCoordinador.validarTipoUsuario(miUsuarioVo.getTipo())) {
+            try {
+                preStatement = connection.prepareStatement(consulta);
+                preStatement.setString(1, miUsuarioVo.getDocumento());
+                preStatement.setString(2,miUsuarioVo.getNombre());
+                preStatement.setString(3,miUsuarioVo.getProfesion());
+                preStatement.setInt(4, miUsuarioVo.getEdad());
+                preStatement.setString(5, miUsuarioVo.getDireccion());
+                preStatement.setString(6, miUsuarioVo.getTelefono());
+                preStatement.setInt(7, miUsuarioVo.getTipo());
+                preStatement.execute();
 
-        try {
-            preStatement = connection.prepareStatement(consulta);
-            preStatement.setString(1, miUsuarioVo.getDocumento());
-            preStatement.setString(2,miUsuarioVo.getNombre());
-            preStatement.setString(3,miUsuarioVo.getProfesion());
-            preStatement.setInt(4, miUsuarioVo.getEdad());
-            preStatement.setString(5, miUsuarioVo.getDireccion());
-            preStatement.setString(6, miUsuarioVo.getTelefono());
-            preStatement.setInt(7, miUsuarioVo.getTipo());
-            preStatement.execute();
-
-            resultado="ok";
-        } catch (SQLException e) {
-            System.out.println("No se pudo registrar el dato: "+e.getMessage());
-            e.printStackTrace();
-            resultado="error";
-        }
+                resultado="ok";
+            } catch (SQLException e) {
+                System.out.println("No se pudo registrar el dato: "+e.getMessage());
+                e.printStackTrace();
+                resultado="error";
+            }
+        } else
+            resultado = "error";
 
         return resultado;
     }
@@ -100,24 +102,28 @@ public class UsuarioDao {
         Connection connection=null;
         Conexion miConexion=this.miCoordinador.getConexion();
         connection=miConexion.getConnection();
-        try{
-            String consulta="UPDATE usuario SET documento= ? ,nombre = ? , profesion=? , edad=? , direccion=? ,telefono= ? WHERE documento= ? ";
-            PreparedStatement preStatement = connection.prepareStatement(consulta);
+        if (this.miCoordinador.validarTipoUsuario(miUsuarioVo.getTipo())) {
+            try{
+                String consulta="UPDATE usuario SET documento= ? ,nombre = ? , profesion=? , edad=? , direccion=? ,telefono= ?, tipo= ? WHERE documento= ? ";
+                PreparedStatement preStatement = connection.prepareStatement(consulta);
 
-            preStatement.setString(1, miUsuarioVo.getDocumento());
-            preStatement.setString(2,miUsuarioVo.getNombre());
-            preStatement.setString(3,miUsuarioVo.getProfesion());
-            preStatement.setInt(4, miUsuarioVo.getEdad());
-            preStatement.setString(5, miUsuarioVo.getDireccion());
-            preStatement.setString(6, miUsuarioVo.getTelefono());
-            preStatement.setString(7, miUsuarioVo.getDocumento());
-            preStatement.executeUpdate();
+                preStatement.setString(1, miUsuarioVo.getDocumento());
+                preStatement.setString(2,miUsuarioVo.getNombre());
+                preStatement.setString(3,miUsuarioVo.getProfesion());
+                preStatement.setInt(4, miUsuarioVo.getEdad());
+                preStatement.setString(5, miUsuarioVo.getDireccion());
+                preStatement.setString(6, miUsuarioVo.getTelefono());
+                preStatement.setInt(7, miUsuarioVo.getTipo());
+                preStatement.setString(8, miUsuarioVo.getDocumento());
+                preStatement.executeUpdate();
 
-            resultado="ok";
-        }catch(SQLException	 e){
-            System.out.println(e);
-            resultado="error";
-        }
+                resultado="ok";
+            }catch(SQLException e){
+                System.out.println(e);
+                resultado="error";
+            }
+        } else
+            resultado = "error";
         return resultado;
     }
 

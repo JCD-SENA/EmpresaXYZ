@@ -8,7 +8,7 @@ public class Principal {
     /**
      * Falta Validar que si no hay conexion la establezca
      * @param args
-     */
+    **/
     public static void main(String[] args) {
         Conexion miConexion = new Conexion();
         if (miConexion.getConnection() != null) {
