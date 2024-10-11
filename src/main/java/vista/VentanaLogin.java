@@ -28,6 +28,8 @@ public class VentanaLogin extends JDialog implements ActionListener, WindowListe
     private javax.swing.JLabel tituloLogin;
     
     private Coordinador miCoordinador;
+    
+    private int intentos = 0;
     // End of variables declaration  
 	
     /**
@@ -111,7 +113,7 @@ public class VentanaLogin extends JDialog implements ActionListener, WindowListe
         botonAceptar.setBounds(150, 260, 110, 30);
         botonAceptar.addActionListener(this);
 
-        comboUsuarios.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Administrador", "Usuario"}));
+        comboUsuarios.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Administrador", "Usuario", "Secretaria"}));
         panelLogin.add(comboUsuarios);
         comboUsuarios.setBounds(70, 190, 190, 20);
         comboUsuarios.addActionListener(this);
@@ -124,13 +126,14 @@ public class VentanaLogin extends JDialog implements ActionListener, WindowListe
         panelLogin.setBounds(0, 0, 270, 300);
 
         pack();
-    }// </editor-fold>                        
+    }
 
-   
-/////////////            
-    
     public void setCoordinador(Coordinador miCoordinador) {
         this.miCoordinador=miCoordinador;
+    }
+    
+    private void reinicioContador() {
+        this.intentos = 0;
     }
 
     @SuppressWarnings("deprecation")
@@ -142,28 +145,36 @@ public class VentanaLogin extends JDialog implements ActionListener, WindowListe
 
         if (evento.getSource()==botonAceptar) {
             String resp=miCoordinador.validarIngreso(comboUsuarios.getSelectedIndex(),campoPass.getText());
-            System.out.println(resp);
+            //System.out.println(comboUsuarios.getSelectedIndex());
             if (resp.equals("error")) {
                 JOptionPane.showMessageDialog(null, "No ha seleccionado un usuario","Advertencia",JOptionPane.WARNING_MESSAGE);
+                this.intentos += 1;
             }else{
                 if (resp.equals("invalido")) {
                     JOptionPane.showMessageDialog(null, "El pass no corresponde","Advertencia",JOptionPane.WARNING_MESSAGE);
+                    this.intentos += 1;
+                } else if (resp.equals("desconectado")) {
+                    JOptionPane.showMessageDialog(null, "No se pudo conectar a la BD, verifique que se encuentre el linea","Error de Conexion",JOptionPane.ERROR_MESSAGE);
+                    this.intentos += 1;
+                } else if (resp.equals("desactivado")) {
+                    JOptionPane.showMessageDialog(null, "El usuario está desactivado","Advertencia",JOptionPane.WARNING_MESSAGE);
                 }else{
-                    if (resp.equals("desconectado")) {
-                        JOptionPane.showMessageDialog(null, "No se pudo conectar a la BD, "
-                        + "verifique que se encuentre el linea","Error de Conexion",JOptionPane.ERROR_MESSAGE);
-                    }else{
-                        miCoordinador.asignarPrivilegios(campoPass.getText());
-                        miCoordinador.cerrarVentanaLogin();
-                    }
+                    miCoordinador.asignarPrivilegios(campoPass.getText());
+                    miCoordinador.cerrarVentanaLogin();
+                    reinicioContador();
                 }
             }
+        }
+        if (intentos > 2) {
+            JOptionPane.showMessageDialog(null, "Se ha intentado ingresar a la cuenta más de 3 veces\nCerrando el programa...","No más intentos",JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
     }
 	
     public void limpiar(){
         comboUsuarios.setSelectedIndex(0);
         campoPass.setText("");
+        reinicioContador();
     }
 
     private void mostrarElementos() {

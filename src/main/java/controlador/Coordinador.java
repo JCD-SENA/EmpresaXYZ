@@ -49,10 +49,10 @@ public class Coordinador {
 	}
 
 	public void asignarPrivilegios(String pass) {
-            int tipo = miUsuarioDao.consultarUsuario(pass).getTipo();
-            miVentana.asignarPrivilegios(tipo);
-            miVentanaRegistro.asignarPrivilegios(tipo);
-            miVentanaConsultaIndividual.asignarPrivilegios(tipo, pass);
+            UsuarioVo miUsuarioVo = miUsuarioDao.consultarUsuario(pass);
+            miVentana.asignarPrivilegios(miUsuarioVo.getTipo(), miUsuarioVo.getNombre());
+            miVentanaRegistro.asignarPrivilegios(miUsuarioVo.getTipo());
+            miVentanaConsultaIndividual.asignarPrivilegios(miUsuarioVo.getTipo(), pass);
 	}
 
 	public void mostrarLogin() {
@@ -100,12 +100,20 @@ public class Coordinador {
 	public UsuarioVo consultarUsuario(String doc) {	
             return miUsuarioDao.consultarUsuario(doc);
 	}
+        
+        public UsuarioVo consultarUsuario(String doc, int per) {	
+            return miUsuarioDao.consultarUsuario(doc, per);
+	}
 
 	public String actualizaUsuario(UsuarioVo miUsuarioVo) {
             return miUsuarioDao.actualizaUsuario(miUsuarioVo);
 	}
 
-	public String eliminarUsuario(String documento) {
-            return miUsuarioDao.eliminarUsuario(documento);
+	public String desactivarUsuario(String documento) {
+            return miUsuarioDao.desactivarUsuario(documento);
 	}
+        
+        public String activarUsuario(String documento) {
+            return miUsuarioDao.activarUsuario(documento);
+        }
 }

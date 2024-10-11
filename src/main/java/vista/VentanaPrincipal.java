@@ -96,7 +96,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
         labelTitulo.setForeground(Color.white);
        // labelTitulo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panelTitulo.add(labelTitulo);
-       labelTitulo.setBounds(5, 5, 380, 60);
+       labelTitulo.setBounds(5, 5, this.ancho, 60);
         
         labelInferior.setFont(new java.awt.Font("Chiller", 0, 30)); // NOI18N
         labelInferior.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -143,19 +143,13 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
         this.miCoordinador=miCoordinador;
     }
 
-    public void asignarPrivilegios(int tipo) {
-        String usuario = "";
-        switch (tipo) {
-            case 1:
-                usuario = "Administrador";
-                botonConsultar.setVisible(true);
-                botonRegistrar.setVisible(true);
-                break;
-            case 2:
-                usuario = "Usuario";
-                botonConsultar.setVisible(true);
-                botonRegistrar.setVisible(false);
-                break;
+    public void asignarPrivilegios(int tipo, String usuario) {
+        if (tipo == 1 || tipo == 3) {
+            botonConsultar.setVisible(true);
+            botonRegistrar.setVisible(true);
+        } else {
+            botonConsultar.setVisible(true);
+            botonRegistrar.setVisible(false);
         }
         labelTitulo.setText("Bienvenido : "+usuario);
     }

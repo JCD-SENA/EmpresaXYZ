@@ -30,7 +30,7 @@ public class UsuarioDao {
         PreparedStatement preStatement=null;
 
         connection=conexion.getConnection();
-        String consulta="INSERT INTO usuario (documento,nombre,profesion,edad,direccion,telefono,tipo)" + " VALUES (?,?,?,?,?,?,?)";
+        String consulta="INSERT INTO usuario (documento,nombre,profesion,edad,direccion,telefono,tipo,estado)" + " VALUES (?,?,?,?,?,?,?,1)";
         if (this.miCoordinador.validarTipoUsuario(miUsuarioVo.getTipo())) {
             try {
                 preStatement = connection.prepareStatement(consulta);
@@ -56,6 +56,10 @@ public class UsuarioDao {
     }
 
     public UsuarioVo consultarUsuario(String doc) {
+        return consultarUsuario(doc, 1);
+    }
+    
+    public UsuarioVo consultarUsuario(String doc, int rol) {
         Connection connection=null;
         Conexion miConexion= this.miCoordinador.getConexion();
         PreparedStatement statement=null;
@@ -66,6 +70,8 @@ public class UsuarioDao {
         connection=miConexion.getConnection();
 
         String consulta="SELECT * FROM usuario where documento = ?";
+        if (rol == 2)
+            consulta+=" AND estado=1";
         ArrayList<UsuarioVo> listUser=new ArrayList<UsuarioVo>();
         try {
             if (connection!=null) {
@@ -83,6 +89,7 @@ public class UsuarioDao {
                     miUsuario.setDireccion(result.getString("direccion"));
                     miUsuario.setTelefono(result.getString("telefono"));		
                     miUsuario.setTipo(result.getInt("tipo"));
+                    miUsuario.setEstado(result.getInt("estado"));
 
                     listUser.add(miUsuario);
                 }
@@ -104,7 +111,7 @@ public class UsuarioDao {
         connection=miConexion.getConnection();
         if (this.miCoordinador.validarTipoUsuario(miUsuarioVo.getTipo())) {
             try{
-                String consulta="UPDATE usuario SET documento= ? ,nombre = ? , profesion=? , edad=? , direccion=? ,telefono= ?, tipo= ? WHERE documento= ? ";
+                String consulta="UPDATE usuario SET documento= ? ,nombre = ? , profesion=? , edad=? , direccion=? ,telefono= ?, tipo= ?, estado=1 WHERE documento= ? ";
                 PreparedStatement preStatement = connection.prepareStatement(consulta);
 
                 preStatement.setString(1, miUsuarioVo.getDocumento());
@@ -127,14 +134,37 @@ public class UsuarioDao {
         return resultado;
     }
 
-    public String eliminarUsuario(String documento) {
+    public String desactivarUsuario(String documento) {
         Connection connection=null;
         Conexion miConexion=this.miCoordinador.getConexion();
         connection=miConexion.getConnection();
 
         String resp="";
         try {
-            String sentencia="DELETE FROM usuario WHERE documento= ? ";
+            String sentencia="UPDATE usuario SET estado=0 WHERE documento= ? ";
+
+            PreparedStatement statement = connection.prepareStatement(sentencia);
+            statement.setString(1, documento);
+
+            statement.executeUpdate();
+
+            resp="ok";
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            resp="error";
+        }
+        return resp;
+    }
+    
+    public String activarUsuario(String documento) {
+        Connection connection=null;
+        Conexion miConexion=this.miCoordinador.getConexion();
+        connection=miConexion.getConnection();
+
+        String resp="";
+        try {
+            String sentencia="UPDATE usuario SET estado=1 WHERE documento= ? ";
 
             PreparedStatement statement = connection.prepareStatement(sentencia);
             statement.setString(1, documento);

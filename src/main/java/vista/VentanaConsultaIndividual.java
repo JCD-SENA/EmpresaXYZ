@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import modelo.vo.UsuarioVo;
 
 import controlador.Coordinador;
+import java.awt.Color;
 
 /**
  *
@@ -36,6 +37,16 @@ public class VentanaConsultaIndividual extends JDialog implements ActionListener
         this.tipoUsuario = tipo;
         this.pass = pass;
         if (tipo == 2){
+            btonActualizar.setVisible(false);
+            btonEliminar.setVisible(false);
+            campoTelefono.setEditable(false);
+            campoDireccion.setEditable(false);
+            campoDocumento.setEditable(false);
+            campoEdad.setEditable(false);
+            campoNombre.setEditable(false);
+            campoProfesion.setEditable(false);
+            comboTipo.setEnabled(false);
+        } else if (tipo == 3) {
             btonActualizar.setVisible(false);
             btonEliminar.setVisible(false);
             campoTelefono.setEditable(false);
@@ -143,7 +154,7 @@ public class VentanaConsultaIndividual extends JDialog implements ActionListener
         labelTipo.setText("*Tipo usuario:");
         labelTipo.setBounds(150, 230, 100, 20);
         
-        comboTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Administrador", "Usuario"}));
+        comboTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Administrador", "Usuario", "Secretaria"}));
         panelConsulta.add(comboTipo);
         comboTipo.setBounds(260, 230, 240, 20);
         comboTipo.addActionListener(this);
@@ -191,7 +202,7 @@ public class VentanaConsultaIndividual extends JDialog implements ActionListener
         btonActualizar.addActionListener(this);
         
         btonEliminar.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        btonEliminar.setText("Eliminar");
+        btonEliminar.setText("Desactivar");
         panelConsulta.add(btonEliminar);
         btonEliminar.setBounds(310, 270, 170, 30);
         btonEliminar.addActionListener(this);
@@ -242,7 +253,7 @@ public class VentanaConsultaIndividual extends JDialog implements ActionListener
     }
 
     private void consultarUsuario() {
-        UsuarioVo usuarioVO=miCoordinador.consultarUsuario(campoConsultaDocumento.getText().trim());
+        UsuarioVo usuarioVO=miCoordinador.consultarUsuario(campoConsultaDocumento.getText().trim(), this.tipoUsuario);
         
         if (usuarioVO!=null) {		
             campoNombre.setText(usuarioVO.getNombre());
@@ -252,6 +263,13 @@ public class VentanaConsultaIndividual extends JDialog implements ActionListener
             campoTelefono.setText(usuarioVO.getTelefono());
             campoEdad.setText(usuarioVO.getEdad()+"");	
             comboTipo.setSelectedIndex(usuarioVO.getTipo());
+            if (usuarioVO.getEstado() == 0) {
+                campoNombre.setForeground(Color.red);
+                btonEliminar.setText("Activar");
+            } else {
+                campoNombre.setForeground(Color.black);
+                btonEliminar.setText("Desactivar");
+            }
         }else{
             JOptionPane.showMessageDialog(null, "El usuario no se encuentra registrado en el sistema", "Datos Inexistentes",JOptionPane.WARNING_MESSAGE);
         }		
@@ -301,18 +319,36 @@ public class VentanaConsultaIndividual extends JDialog implements ActionListener
     private void eliminaUsuario() {
         String documento=campoDocumento.getText().trim();
         String elimina="";
-        if (!documento.equals("")) {
-            int resp=JOptionPane.showConfirmDialog(null,"Esta seguro de eliminar el usuario "+documento+"?");
-            if (JOptionPane.OK_OPTION == resp){
-                elimina=miCoordinador.eliminarUsuario(documento);
-                if (elimina.equals("ok")) {
-                    JOptionPane.showMessageDialog(null, " Se ha Eliminado Correctamente","Informaci�n",JOptionPane.INFORMATION_MESSAGE);	
-                    limpiarVentana();
+        UsuarioVo usuarioVO=miCoordinador.consultarUsuario(documento);
+        if (usuarioVO.getEstado() == 1) {
+            if (!documento.equals("")) {
+                int resp=JOptionPane.showConfirmDialog(null,"Esta seguro de desactivar el usuario "+documento+"?");
+                if (JOptionPane.OK_OPTION == resp){
+                    elimina=miCoordinador.desactivarUsuario(documento);
+                    if (elimina.equals("ok")) {
+                        JOptionPane.showMessageDialog(null, " Se ha desactivado Correctamente","Informaci�n",JOptionPane.INFORMATION_MESSAGE);	
+                        limpiarVentana();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "No se pudo desactivar ","Informaci�n",JOptionPane.WARNING_MESSAGE);
+                    }				
                 }else{
-                    JOptionPane.showMessageDialog(null, "No se pudo eliminar ","Informaci�n",JOptionPane.WARNING_MESSAGE);
-                }				
-            }else{
-                JOptionPane.showMessageDialog(null, "Ingrese un documento ","Informaci�n",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Ingrese un documento ","Informaci�n",JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        } else {
+            if (!documento.equals("")) {
+                int resp=JOptionPane.showConfirmDialog(null,"Esta seguro de activar el usuario "+documento+"?");
+                if (JOptionPane.OK_OPTION == resp){
+                    elimina=miCoordinador.activarUsuario(documento);
+                    if (elimina.equals("ok")) {
+                        JOptionPane.showMessageDialog(null, " Se ha activado Correctamente","Informaci�n",JOptionPane.INFORMATION_MESSAGE);	
+                        limpiarVentana();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "No se pudo activar ","Informaci�n",JOptionPane.WARNING_MESSAGE);
+                    }				
+                }else{
+                    JOptionPane.showMessageDialog(null, "Ingrese un documento ","Informaci�n",JOptionPane.WARNING_MESSAGE);
+                }
             }
         }
     }

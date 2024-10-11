@@ -117,7 +117,7 @@ public class VentanaRegistro extends JDialog  implements ActionListener{
         labelTipo.setText("*Tipo usuario:");
         labelTipo.setBounds(150, 230, 100, 20);
         
-        comboTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Administrador", "Usuario"}));
+        comboTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Administrador", "Usuario", "Secretaria"}));
         panelRegistro.add(comboTipo);
         comboTipo.setBounds(260, 230, 240, 20);
         comboTipo.addActionListener(this);

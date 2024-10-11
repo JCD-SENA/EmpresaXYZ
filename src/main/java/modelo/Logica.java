@@ -10,6 +10,7 @@ public class Logica {
     final int SELECCION=0;
     final int ADMINISTRADOR=1;
     final int USUARIO=2;
+    final int SECRETARIA=3;
 	
     private Coordinador miCoordinador;
      // End of variables declaration               
@@ -33,9 +34,12 @@ public class Logica {
         String retorno="";
 
         if (miUsuarioVo!=null) {
-            if ( (index==ADMINISTRADOR && index==miUsuarioVo.getTipo() )|| (index==USUARIO && index==miUsuarioVo.getTipo() )) {
+            if ( (index==ADMINISTRADOR && index==miUsuarioVo.getTipo() )|| (index==USUARIO && index==miUsuarioVo.getTipo() ) || (index==SECRETARIA && index==miUsuarioVo.getTipo() )) {
                 if (pass.equals(miUsuarioVo.getDocumento())) {
-                    retorno=miUsuarioVo.getNombre();
+                    if (miUsuarioVo.getEstado() == 1)
+                        retorno=miUsuarioVo.getNombre();
+                    else
+                        retorno="desactivado";
                 }else{
                     retorno="invalido";
                 }
@@ -81,6 +85,6 @@ public class Logica {
     }
     
     public boolean validarTipoUsuario(int tipoUsuario) {
-        return (tipoUsuario >= 1 && tipoUsuario <= 2);
+        return (tipoUsuario >= 1 && tipoUsuario <= 3);
     }
 }
