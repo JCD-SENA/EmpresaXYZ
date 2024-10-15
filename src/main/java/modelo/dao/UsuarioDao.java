@@ -30,7 +30,7 @@ public class UsuarioDao {
         PreparedStatement preStatement=null;
 
         connection=conexion.getConnection();
-        String consulta="INSERT INTO usuario (documento,nombre,profesion,edad,direccion,telefono,tipo,estado)" + " VALUES (?,?,?,?,?,?,?,1)";
+        String consulta="INSERT INTO usuario (documento,nombre,profesion,edad,direccion,telefono,tipo,estado) VALUES (?,?,?,?,?,?,?,1)";
         if (this.miCoordinador.validarTipoUsuario(miUsuarioVo.getTipo())) {
             try {
                 preStatement = connection.prepareStatement(consulta);

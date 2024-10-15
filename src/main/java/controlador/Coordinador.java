@@ -2,12 +2,16 @@ package controlador;
 
 import modelo.Logica;
 import modelo.dao.UsuarioDao;
+import modelo.dao.ProductoDao;
 import modelo.vo.UsuarioVo;
+import modelo.vo.ProductoVo;
 import modelo.conexion.Conexion;
 import vista.VentanaConsultaIndividual;
 import vista.VentanaLogin;
 import vista.VentanaPrincipal;
 import vista.VentanaRegistro;
+import vista.VentanaProductos;
+import vista.VentanaRegistroProductos;
 
 public class Coordinador {
 
@@ -17,7 +21,10 @@ public class Coordinador {
 	private VentanaRegistro miVentanaRegistro;
 	private VentanaConsultaIndividual miVentanaConsultaIndividual;
 	private UsuarioDao miUsuarioDao;
+        private ProductoDao miProductoDao;
         private Conexion miConexion;
+        VentanaProductos miVentanaProductos;
+        VentanaRegistroProductos miVentanaRegistroProductos;
 
         public void setConexion (Conexion miConexion) {
             this.miConexion = miConexion;
@@ -25,6 +32,22 @@ public class Coordinador {
         
         public Conexion getConexion () {
             return this.miConexion;
+        }
+        
+        public void setVentanaProductos(VentanaProductos miVentanaProductos) {
+            this.miVentanaProductos = miVentanaProductos;
+        }
+        
+        public void setVentanaRegistroProductos(VentanaRegistroProductos miVentanaRegistroProductos) {
+            this.miVentanaRegistroProductos = miVentanaRegistroProductos;
+        }
+        
+        public void mostrarVentanaRegistroProductos() {
+            this.miVentanaRegistroProductos.setVisible(true);
+        }
+        
+        public void mostrarVentanaProductos() {
+            this.miVentanaProductos.setVisible(true);
         }
         
 	public void setVentanaPrincipal(VentanaPrincipal miVentana) {
@@ -79,13 +102,25 @@ public class Coordinador {
 	public void setUsuarioDao(UsuarioDao miUsuarioDao) {
             this.miUsuarioDao=miUsuarioDao;
 	}
+        
+        public void setProductoDao(ProductoDao miProductoDao) {
+            this.miProductoDao=miProductoDao;
+        }
 
 	public String registrarUsuario(UsuarioVo miUsuarioVo) {
             return miUsuarioDao.registrarUsuario(miUsuarioVo);
 	}
+        
+        public boolean registrarProducto(ProductoVo miProductoVo) {
+            return miProductoDao.registrarProducto(miProductoVo);
+        }
 
 	public boolean validarCampos(UsuarioVo miUsuarioVo) {
             return miLogica.validarCampos(miUsuarioVo);
+	}
+        
+        public boolean validarCamposProducto(ProductoVo miProductoVo) {
+            return miLogica.validarCamposProducto(miProductoVo);
 	}
         
         public boolean validarTipoUsuario(int tipoUsuario) {
@@ -104,10 +139,18 @@ public class Coordinador {
         public UsuarioVo consultarUsuario(String doc, int per) {	
             return miUsuarioDao.consultarUsuario(doc, per);
 	}
+        
+        public ProductoVo consultarProducto(String id) {
+            return miProductoDao.consultarProducto(id);
+        }
 
 	public String actualizaUsuario(UsuarioVo miUsuarioVo) {
             return miUsuarioDao.actualizaUsuario(miUsuarioVo);
 	}
+        
+        public boolean eliminarProducto(String id) {
+            return miProductoDao.eliminarProducto(id);
+        }
 
 	public String desactivarUsuario(String documento) {
             return miUsuarioDao.desactivarUsuario(documento);

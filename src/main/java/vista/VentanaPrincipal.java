@@ -28,6 +28,7 @@ import controlador.Coordinador;
 public class VentanaPrincipal extends JFrame implements ActionListener, WindowListener {
     private JButton botonConsultar;
     private JButton botonRegistrar;
+    private JButton botonProductos;
     private JLabel labelTitulo,labelInferior;
     private JPanel miPanelPrincipal,panelTitulo,panelInferior;
 
@@ -41,6 +42,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
     private int largo, ancho;
 
     private Coordinador miCoordinador;
+    private int privilegios;
 	
 	
     /**
@@ -75,6 +77,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
         labelInferior = new javax.swing.JLabel();
         botonConsultar = new javax.swing.JButton();
         botonRegistrar = new javax.swing.JButton();
+        botonProductos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         
@@ -116,6 +119,12 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
         botonRegistrar.setBounds(20, 80, 190, 60);
         botonRegistrar.addActionListener(this);
         
+        botonProductos.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        botonProductos.setText("PRODUCTOS");
+        miPanelPrincipal.add(botonProductos);
+        botonProductos.setBounds(440, 80, 190, 60);
+        botonProductos.addActionListener(this);
+        
         barraMenu =new JMenuBar();
         menu=new JMenu();
         itemOpciones =new JMenuItem();
@@ -144,6 +153,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
     }
 
     public void asignarPrivilegios(int tipo, String usuario) {
+        this.privilegios = tipo;
         if (tipo == 1 || tipo == 3) {
             botonConsultar.setVisible(true);
             botonRegistrar.setVisible(true);
@@ -180,6 +190,14 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
 
         if (e.getSource()==botonConsultar) {
             miCoordinador.mostrarVentanaConsulta();			
+        }
+        
+        if (e.getSource() == botonProductos) {
+            if (this.privilegios == 1 || this.privilegios == 3) {
+                this.miCoordinador.mostrarVentanaRegistroProductos();
+            } else {
+                this.miCoordinador.mostrarVentanaProductos();
+            }
         }
     }
     

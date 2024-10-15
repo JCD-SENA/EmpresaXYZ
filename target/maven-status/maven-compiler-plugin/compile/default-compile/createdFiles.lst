@@ -2,9 +2,13 @@ vista\VentanaConsultaIndividual.class
 modelo\dao\UsuarioDao.class
 controlador\Principal.class
 modelo\conexion\Conexion.class
+modelo\vo\ProductoVo.class
 modelo\vo\UsuarioVo.class
 controlador\Coordinador.class
 vista\VentanaRegistro.class
+vista\VentanaRegistroProductos.class
+vista\VentanaProductos.class
+modelo\dao\ProductoDao.class
 vista\VentanaLogin.class
 modelo\Logica.class
 vista\VentanaPrincipal.class

@@ -3,6 +3,7 @@ package modelo;
 import javax.swing.JOptionPane;
 
 import modelo.vo.UsuarioVo;
+import modelo.vo.ProductoVo;
 import controlador.Coordinador;
 
 public class Logica {
@@ -51,6 +52,29 @@ public class Logica {
         }
         return retorno;
     }
+    
+    public boolean validarCamposProducto(ProductoVo miProductoVo) {
+        boolean validarNombre = false;
+        boolean validarID = false;
+        boolean validarPrecio = false;
+        boolean validarCantidad = false;
+        
+        try {
+            String id = miProductoVo.getIdProducto();
+            String nombre = miProductoVo.getNombre();
+            int cantidad = miProductoVo.getCantidad();
+            int precio = miProductoVo.getPrecio();
+            
+            validarID = (id!=null && !id.equals(""));
+            validarNombre = (nombre!=null && !nombre.equals(""));
+            validarPrecio = (precio >= 0);
+            validarCantidad = (cantidad >= 0);
+        } catch(Exception e) {
+            return false;
+        }
+        
+        return (validarID && validarNombre && validarPrecio && validarCantidad);
+    }
 
     public boolean validarCampos(UsuarioVo miUsuarioVo) {
         boolean validarNombre=false;
@@ -59,19 +83,10 @@ public class Logica {
         String documento=miUsuarioVo.getDocumento();
         String nombre=miUsuarioVo.getNombre();
 
-        if (documento!=null && !documento.equals("")) {
-            validarDocumento=true;
-        }
+        validarDocumento= (documento!=null && !documento.equals(""));
+        validarNombre= (nombre!=null && !nombre.equals(""));
 
-        if (nombre!=null && !nombre.equals("")) {
-            validarNombre=true;
-        }
-
-        if (validarDocumento==true && validarNombre==true) {
-            return true;
-        }else{
-            return false;	
-        }
+        return (validarDocumento==true && validarNombre==true);
     }
 
     public Integer validarEdad(String edadIngresada) {
