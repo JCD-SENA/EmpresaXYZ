@@ -65,7 +65,7 @@ public class UsuarioDao {
         PreparedStatement statement=null;
         ResultSet result=null;
 
-        UsuarioVo miUsuario=new UsuarioVo();
+        UsuarioVo miUsuario=null;
 
         connection=miConexion.getConnection();
 

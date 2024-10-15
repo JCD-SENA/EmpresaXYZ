@@ -148,6 +148,10 @@ public class Coordinador {
             return miUsuarioDao.actualizaUsuario(miUsuarioVo);
 	}
         
+        public boolean actualizarProducto(ProductoVo miProductoVo) {
+            return miProductoDao.actualizarProducto(miProductoVo);
+        }
+        
         public boolean eliminarProducto(String id) {
             return miProductoDao.eliminarProducto(id);
         }

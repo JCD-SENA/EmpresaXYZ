@@ -190,12 +190,50 @@ public class VentanaRegistroProductos extends JDialog  implements ActionListener
     private void eliminaProducto() {
         String id=campoID.getText().trim();
         ProductoVo miProductoVo=miCoordinador.consultarProducto(id);
-        if (JOptionPane.showConfirmDialog(null,"Esta seguro de eliminar el producto "+this.campoNombre.getText()+"?") == JOptionPane.OK_OPTION) {
-            if (this.miCoordinador.eliminarProducto(id)) {
-                JOptionPane.showMessageDialog(null, "Se ha eliminado el producto con exito");
-            } else {
-                JOptionPane.showMessageDialog(null, "No se pudo eliminar el producto","Error",JOptionPane.ERROR_MESSAGE);
+        if (miProductoVo != null) {
+            if (JOptionPane.showConfirmDialog(null,"Esta seguro de eliminar el producto "+this.campoNombre.getText()+"?") == JOptionPane.OK_OPTION) {
+                if (this.miCoordinador.eliminarProducto(id)) {
+                    JOptionPane.showMessageDialog(null, "Se ha eliminado el producto con exito");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo eliminar el producto","Error",JOptionPane.ERROR_MESSAGE);
+                }
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "No existe el producto","Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void consultarProducto() {
+        String id=campoID.getText().trim();
+        ProductoVo miProductoVo=miCoordinador.consultarProducto(id);
+        if (miProductoVo != null) {
+            this.campoNombre.setText(miProductoVo.getNombre());
+            this.spinnerCantidad.setValue(miProductoVo.getCantidad());
+            this.spinnerPrecio.setValue(miProductoVo.getPrecio());
+        } else {
+            JOptionPane.showMessageDialog(null, "No existe el producto","Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void actualizarProducto() {
+        String id=campoID.getText().trim();
+        ProductoVo miProductoVo=miCoordinador.consultarProducto(id);
+        if (miProductoVo != null) {
+            miProductoVo.setIdProducto(this.campoID.getText());
+            miProductoVo.setNombre(this.campoNombre.getText());
+            miProductoVo.setCantidad((int)this.spinnerCantidad.getValue());
+            miProductoVo.setPrecio((int)this.spinnerPrecio.getValue());
+            if (miCoordinador.validarCamposProducto(miProductoVo)) {
+                if (miCoordinador.actualizarProducto(miProductoVo)) {
+                    JOptionPane.showMessageDialog(null, "Se ha actualizado el producto con exito");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo actualizar el producto","Error",JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Uno de los valores no es valido","Advertencia",JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No existe el producto","Error",JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -217,7 +255,11 @@ public class VentanaRegistroProductos extends JDialog  implements ActionListener
         }
         
         if (e.getSource() == this.btnActualizar) {
+            actualizarProducto();
+        }
         
+        if (e.getSource() == this.btnConsultar) {
+            consultarProducto();
         }
     }
 }

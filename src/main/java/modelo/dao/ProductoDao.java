@@ -51,11 +51,11 @@ public class ProductoDao {
         PreparedStatement statement=null;
         ResultSet result=null;
 
-        ProductoVo miProducto=new ProductoVo();
+        ProductoVo miProducto=null;
 
         connection=miConexion.getConnection();
 
-        String consulta="SELECT * FROM producto where nombre = ?";
+        String consulta="SELECT * FROM producto WHERE nombre = ?";
         try {
             if (connection!=null) {
                 statement=connection.prepareStatement(consulta);
@@ -82,11 +82,11 @@ public class ProductoDao {
         PreparedStatement statement=null;
         ResultSet result=null;
 
-        ProductoVo miProducto=new ProductoVo();
+        ProductoVo miProducto=null;
 
         connection=miConexion.getConnection();
 
-        String consulta="SELECT * FROM producto where idProducto = ?";
+        String consulta="SELECT * FROM producto WHERE idProducto = ?";
         try {
             if (connection!=null) {
                 statement=connection.prepareStatement(consulta);
@@ -116,7 +116,7 @@ public class ProductoDao {
         connection=miConexion.getConnection();
         
         try{
-            String consulta="UPDATE usuario SET idProducto=?, nombre=?, cantidad=?, precio=? WHERE idProducto=? ";
+            String consulta="UPDATE producto SET idProducto=?, nombre=?, cantidad=?, precio=? WHERE idProducto=? ";
             PreparedStatement preStatement = connection.prepareStatement(consulta);
 
             preStatement.setString(1, miProducto.getIdProducto());
