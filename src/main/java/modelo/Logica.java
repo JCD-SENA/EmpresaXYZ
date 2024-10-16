@@ -95,7 +95,7 @@ public class Logica {
             edad=Integer.parseInt(edadIngresada);
         } catch (Exception e) {
             edad=null;
-        }			
+        }
         return edad;
     }
     

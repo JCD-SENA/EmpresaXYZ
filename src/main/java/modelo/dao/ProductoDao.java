@@ -60,6 +60,7 @@ public class ProductoDao {
             if (connection!=null) {
                 statement=connection.prepareStatement(consulta);
                 statement.setString(1, nombre);
+                result=statement.executeQuery();
                 while(result.next()==true){
                     miProducto=new ProductoVo();
                     miProducto.setIdProducto(result.getString("idProducto"));
@@ -72,6 +73,7 @@ public class ProductoDao {
             }
         } catch (SQLException e) {
             System.out.println("Error en la consulta del usuario: "+e.getMessage());
+            return null;
         }
         return miProducto;
     }

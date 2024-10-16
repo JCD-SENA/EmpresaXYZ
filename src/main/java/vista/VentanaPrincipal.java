@@ -26,9 +26,7 @@ import controlador.Coordinador;
  * @author User
  */
 public class VentanaPrincipal extends JFrame implements ActionListener, WindowListener {
-    private JButton botonConsultar;
-    private JButton botonRegistrar;
-    private JButton botonProductos;
+    private JButton botonConsultar, botonRegistrar, botonProductos, botonCarrito;
     private JLabel labelTitulo,labelInferior;
     private JPanel miPanelPrincipal,panelTitulo,panelInferior;
 
@@ -70,14 +68,15 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        miPanelPrincipal = new javax.swing.JPanel();
-        panelTitulo = new javax.swing.JPanel();
-        panelInferior = new javax.swing.JPanel();
-        labelTitulo = new javax.swing.JLabel();
-        labelInferior = new javax.swing.JLabel();
-        botonConsultar = new javax.swing.JButton();
-        botonRegistrar = new javax.swing.JButton();
-        botonProductos = new javax.swing.JButton();
+        miPanelPrincipal = new JPanel();
+        panelTitulo = new JPanel();
+        panelInferior = new JPanel();
+        labelTitulo = new JLabel();
+        labelInferior = new JLabel();
+        botonConsultar = new JButton();
+        botonRegistrar = new JButton();
+        botonProductos = new JButton();
+        botonCarrito = new JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         
@@ -125,6 +124,12 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
         botonProductos.setBounds(440, 80, 190, 60);
         botonProductos.addActionListener(this);
         
+        botonCarrito.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        botonCarrito.setText("CARRITO");
+        miPanelPrincipal.add(botonCarrito);
+        botonCarrito.setBounds(650, 80, 190, 60);
+        botonCarrito.addActionListener(this);
+        
         barraMenu =new JMenuBar();
         menu=new JMenu();
         itemOpciones =new JMenuItem();
@@ -157,9 +162,11 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
         if (tipo == 1 || tipo == 3) {
             botonConsultar.setVisible(true);
             botonRegistrar.setVisible(true);
+            botonCarrito.setVisible(false);
         } else {
             botonConsultar.setVisible(true);
             botonRegistrar.setVisible(false);
+            botonCarrito.setVisible(true);
         }
         labelTitulo.setText("Bienvenido : "+usuario);
     }
