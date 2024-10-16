@@ -91,35 +91,35 @@ public class VentanaLogin extends JDialog implements ActionListener, WindowListe
         tituloLogin.setText("Ventana Login");
         tituloLogin.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panelLogin.add(tituloLogin);
-        tituloLogin.setBounds(10, 0, 250, 60);
+        tituloLogin.setBounds(5, 5, 250, 60);
 
         imagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/candado.png"))); // NOI18N
         imagen.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         panelLogin.add(imagen);
-        imagen.setBounds(10, 70, 250, 100);
+        imagen.setBounds(5, 75, 250, 100);
 
         labelUser.setText("Usuario");
         panelLogin.add(labelUser);
-        labelUser.setBounds(10, 190, 70, 20);
+        labelUser.setBounds(5, 190, 70, 20);
 
-        labelPass.setText("Pass");
+        labelPass.setText("Password");
         panelLogin.add(labelPass);
-        labelPass.setBounds(10, 220, 70, 14);
+        labelPass.setBounds(5, 223, 70, 14);
         labelPass.setVisible(false);
 
         botonAceptar.setText("Aceptar");
         panelLogin.add(botonAceptar);
-        botonAceptar.setBounds(150, 260, 110, 30);
+        botonAceptar.setBounds(75, 250, 110, 30);
         botonAceptar.addActionListener(this);
 
         comboUsuarios.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione", "Administrador", "Usuario", "Secretaria"}));
         panelLogin.add(comboUsuarios);
-        comboUsuarios.setBounds(70, 190, 190, 20);
+        comboUsuarios.setBounds(65, 190, 190, 20);
         comboUsuarios.addActionListener(this);
         
         panelLogin.add(campoPass);
-        campoPass.setBounds(70, 220, 190, 20);
+        campoPass.setBounds(65, 220, 190, 20);
         campoPass.setVisible(false);
 
         getContentPane().add(panelLogin);

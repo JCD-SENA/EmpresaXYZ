@@ -3,6 +3,7 @@ package vista;
 import controlador.Coordinador;
 import modelo.dao.ProductoDao;
 import modelo.vo.ProductoVo;
+import modelo.vo.UsuarioVo;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -88,28 +89,24 @@ public class VentanaProductos extends JDialog  implements ActionListener{
         lblIngresoID.setBounds(0, 120, 300, 20);
         
         lblPrecio.setFont(new Font("Verdana", 1, 14));
-        lblPrecio.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblPrecio.setText("Precio: ");
         panelProductos.add(lblPrecio);
-        lblPrecio.setBounds(0, 160, 200, 20);
+        lblPrecio.setBounds(245, 160, 200, 20);
         
         lblCantidad.setFont(new Font("Verdana", 1, 14));
-        lblCantidad.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblCantidad.setText("Cantidad: ");
         panelProductos.add(lblCantidad);
-        lblCantidad.setBounds(0, 190, 200, 20);
+        lblCantidad.setBounds(245, 190, 200, 20);
         
         lblCantidadValue.setFont(new Font("Verdana", 0, 14));
-        lblCantidadValue.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblCantidadValue.setText("0 unidades");
         panelProductos.add(lblCantidadValue);
-        lblCantidadValue.setBounds(200, 190, 200, 20);
+        lblCantidadValue.setBounds(320, 190, 200, 20);
         
         lblPrecioValue.setFont(new Font("Verdana", 0, 14));
-        lblPrecioValue.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblPrecioValue.setText("0$");
         panelProductos.add(lblPrecioValue);
-        lblPrecioValue.setBounds(200, 160, 200, 20);
+        lblPrecioValue.setBounds(305, 160, 200, 20);
         
         panelProductos.add(separadorSuperior);
         separadorSuperior.setBounds(20, 150, 660, 10);
@@ -123,13 +120,13 @@ public class VentanaProductos extends JDialog  implements ActionListener{
         btnConsultar.setFont(new Font("Verdana", 0, 14));
         btnConsultar.setText("Consultar");
         panelProductos.add(btnConsultar);
-        btnConsultar.setBounds(530, 92, 140, 45);
+        btnConsultar.setBounds(540, 100, 140, 30);
         btnConsultar.addActionListener(this);
         
         btnComprar.setFont(new Font("Verdana", 0, 14));
         btnComprar.setText("Comprar");
         panelProductos.add(btnComprar);
-        btnComprar.setBounds(420, 167, 140, 40);
+        btnComprar.setBounds(470, 174, 140, 30);
         btnComprar.addActionListener(this);
         
         btnCarrito.setFont(new Font("Verdana", 0, 14));

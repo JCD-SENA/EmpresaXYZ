@@ -69,6 +69,10 @@ public class Coordinador {
     public void setLogica(Logica miLogica) {
         this.miLogica=miLogica;
     }
+    
+    public boolean comprar (String id) {
+        return false;//this.miCarrito.comprar(id);
+    }
 
     public String validarIngreso(int index, String pass) {		
         return miLogica.validarIngreso(index,pass);
