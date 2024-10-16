@@ -36,6 +36,7 @@ public class VentanaProductos extends JDialog  implements ActionListener{
     private JButton btnProductos;
     private JSeparator separadorSuperior;
     private JSeparator separadorInferior;
+    private ProductoVo miProducto;
     
     public VentanaProductos(Frame parent, boolean modal) {
         super(parent, modal);
@@ -155,22 +156,30 @@ public class VentanaProductos extends JDialog  implements ActionListener{
     private void consultar () {
         String id = this.campoID.getText();
         String nombre = this.campoNombre.getText();
-        ProductoVo miProductoVo = null;
+        miProducto = null;
         if (id.length() > 0) {
-            miProductoVo = miCoordinador.consultarProducto(id);
+            miProducto = miCoordinador.consultarProducto(id);
         } else if (nombre.length() > 0) {
-            miProductoVo = miCoordinador.consultarProductoPorNombre(nombre);
+            miProducto = miCoordinador.consultarProductoPorNombre(nombre);
         } else {
             JOptionPane.showMessageDialog(null, "Se debe ingresar el ID o nombre del producto");
         }
         
-        if (miProductoVo != null) {
-            this.campoID.setText(miProductoVo.getIdProducto());
-            this.campoNombre.setText(miProductoVo.getNombre());
-            this.lblCantidadValue.setText(miProductoVo.getCantidad()+" unidades");
-            this.lblPrecioValue.setText(miProductoVo.getPrecio()+"$");
+        if (miProducto != null) {
+            this.campoID.setText(miProducto.getIdProducto());
+            this.campoNombre.setText(miProducto.getNombre());
+            this.lblCantidadValue.setText(miProducto.getCantidad()+" unidades");
+            this.lblPrecioValue.setText(miProducto.getPrecio()+"$");
         } else if (id.length() > 0 || nombre.length() > 0) {
-            JOptionPane.showMessageDialog(null, "No se pudo encontrar el producto");
+            JOptionPane.showMessageDialog(null, "No se pudo encontrar el producto", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void comprar () {
+        if (miProducto != null) {
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Se debe seleccionar un producto primero", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -181,7 +190,7 @@ public class VentanaProductos extends JDialog  implements ActionListener{
         }
         
         if (e.getSource() == this.btnComprar) {
-        
+            comprar();
         }
     }
 }

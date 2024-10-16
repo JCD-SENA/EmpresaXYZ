@@ -24,6 +24,7 @@ public class Aplicacion {
         VentanaRegistroProductos miVentanaRegistroProductos = new VentanaRegistroProductos(miVentana, true);
         UsuarioDao miUsuarioDao=new UsuarioDao();
         ProductoDao miProductoDao=new ProductoDao();
+        Carrito miCarrito = new Carrito();
 
         //Relacionamos las clases con el coordinador				
         miVentana.setCoordinador(miCoordinador);
@@ -35,7 +36,7 @@ public class Aplicacion {
         miProductoDao.setCoordinador(miCoordinador);
         miVentanaProductos.setCoordinador(miCoordinador);
         miVentanaRegistroProductos.setCoordinador(miCoordinador);
-
+        
         //Relacionamos el Coordinador con las Clases
         miCoordinador.setVentanaPrincipal(miVentana);
         miCoordinador.setVentanaLogin(miLogin);

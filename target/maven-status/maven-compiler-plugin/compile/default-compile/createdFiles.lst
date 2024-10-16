@@ -1,4 +1,5 @@
 vista\VentanaConsultaIndividual.class
+controlador\Carrito.class
 modelo\dao\UsuarioDao.class
 controlador\Principal.class
 modelo\conexion\Conexion.class

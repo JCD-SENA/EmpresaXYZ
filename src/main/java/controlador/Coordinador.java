@@ -22,8 +22,17 @@ public class Coordinador {
     private UsuarioDao miUsuarioDao;
     private ProductoDao miProductoDao;
     private Conexion miConexion;
-    VentanaProductos miVentanaProductos;
-    VentanaRegistroProductos miVentanaRegistroProductos;
+    private VentanaProductos miVentanaProductos;
+    private VentanaRegistroProductos miVentanaRegistroProductos;
+    private Carrito miCarrito;
+
+    public Carrito getCarrito() {
+        return miCarrito;
+    }
+
+    public void setCarrito(Carrito miCarrito) {
+        this.miCarrito = miCarrito;
+    }
 
     public void setConexion (Conexion miConexion) {
         this.miConexion = miConexion;

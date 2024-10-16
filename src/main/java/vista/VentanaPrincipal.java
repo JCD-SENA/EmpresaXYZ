@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 
 import controlador.Coordinador;
 
@@ -29,6 +30,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
     private JButton botonConsultar, botonRegistrar, botonProductos, botonCarrito;
     private JLabel labelTitulo,labelInferior;
     private JPanel miPanelPrincipal,panelTitulo,panelInferior;
+    private JSeparator separador;
 
     private JMenuBar barraMenu;
     private JMenu menu;
@@ -77,7 +79,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
         botonRegistrar = new JButton();
         botonProductos = new JButton();
         botonCarrito = new JButton();
-
+        separador = new JSeparator();
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         
  //       getContentPane().setLayout(null);
@@ -98,7 +101,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
         labelTitulo.setForeground(Color.white);
        // labelTitulo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panelTitulo.add(labelTitulo);
-       labelTitulo.setBounds(5, 5, this.ancho, 60);
+        labelTitulo.setBounds(5, 5, this.ancho, 60);
         
         labelInferior.setFont(new java.awt.Font("Chiller", 0, 30)); // NOI18N
         labelInferior.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -146,6 +149,11 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
         miPanelPrincipal.setBounds(0, 0, 670, 350);
         panelTitulo.setBounds(0, 0, this.ancho, 70);
         
+        botonConsultar.setVisible(false);
+        botonRegistrar.setVisible(false);
+        botonProductos.setVisible(false);
+        botonCarrito.setVisible(false);
+        
         panelInferior.setBounds(0, this.largo - 130, this.ancho,53);
         miPanelPrincipal.add(panelTitulo);
         miPanelPrincipal.add(panelInferior);
@@ -163,10 +171,17 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
             botonConsultar.setVisible(true);
             botonRegistrar.setVisible(true);
             botonCarrito.setVisible(false);
+            botonProductos.setVisible(true);
+            botonConsultar.setBounds(230, 80, 190, 60);
+            botonProductos.setBounds(440, 80, 190, 60);
+            botonRegistrar.setBounds(20, 80, 190, 60);
         } else {
             botonConsultar.setVisible(true);
             botonRegistrar.setVisible(false);
             botonCarrito.setVisible(true);
+            botonProductos.setVisible(true);
+            botonConsultar.setBounds(20, 80, 190, 60);
+            botonCarrito.setBounds(230, 80, 190, 60);
         }
         labelTitulo.setText("Bienvenido : "+usuario);
     }
