@@ -159,7 +159,8 @@ public class VentanaLogin extends JDialog implements ActionListener, WindowListe
                 } else if (resp.equals("desactivado")) {
                     JOptionPane.showMessageDialog(null, "El usuario está desactivado","Advertencia",JOptionPane.WARNING_MESSAGE);
                 }else{
-                    miCoordinador.asignarPrivilegios(campoPass.getText());
+                    miCoordinador.setUsuario(miCoordinador.consultarUsuario(campoPass.getText()));
+                    miCoordinador.asignarPrivilegios();
                     miCoordinador.cerrarVentanaLogin();
                     reinicioContador();
                 }

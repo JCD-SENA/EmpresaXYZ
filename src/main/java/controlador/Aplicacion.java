@@ -3,6 +3,7 @@ package controlador;
 import modelo.Logica;
 import modelo.dao.UsuarioDao;
 import modelo.dao.ProductoDao;
+import modelo.vo.UsuarioVo;
 import modelo.conexion.Conexion;
 import vista.VentanaConsultaIndividual;
 import vista.VentanaLogin;
@@ -36,6 +37,7 @@ public class Aplicacion {
         miProductoDao.setCoordinador(miCoordinador);
         miVentanaProductos.setCoordinador(miCoordinador);
         miVentanaRegistroProductos.setCoordinador(miCoordinador);
+        miCarrito.setCoordinador(miCoordinador);
         
         //Relacionamos el Coordinador con las Clases
         miCoordinador.setVentanaPrincipal(miVentana);
@@ -48,6 +50,7 @@ public class Aplicacion {
         miCoordinador.setConexion(miConexion);
         miCoordinador.setVentanaProductos(miVentanaProductos);
         miCoordinador.setVentanaRegistroProductos(miVentanaRegistroProductos);
+        miCoordinador.setCarrito(miCarrito);
 
         miVentana.setVisible(true);
         miLogin.setVisible(true);

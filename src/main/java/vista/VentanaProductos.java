@@ -174,7 +174,11 @@ public class VentanaProductos extends JDialog  implements ActionListener{
     
     private void comprar () {
         if (miProducto != null) {
-            
+            if (miCoordinador.comprar(miProducto.getIdProducto())) {
+                JOptionPane.showMessageDialog(null, "Se ha realizado la compra de "+miProducto.getNombre()+" exitosamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se ha podido realizar la compra", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Se debe seleccionar un producto primero", "Error", JOptionPane.ERROR_MESSAGE);
         }

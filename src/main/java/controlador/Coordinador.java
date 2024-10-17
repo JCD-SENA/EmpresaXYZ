@@ -25,6 +25,15 @@ public class Coordinador {
     private VentanaProductos miVentanaProductos;
     private VentanaRegistroProductos miVentanaRegistroProductos;
     private Carrito miCarrito;
+    private UsuarioVo usuario;
+    
+    public UsuarioVo getUsuario() {
+        return this.usuario;
+    }
+    
+    public void setUsuario(UsuarioVo usuario) {
+        this.usuario = usuario;
+    }
 
     public Carrito getCarrito() {
         return miCarrito;
@@ -71,7 +80,7 @@ public class Coordinador {
     }
     
     public boolean comprar (String id) {
-        return false;//this.miCarrito.comprar(id);
+        return this.miCarrito.comprar(id, this.usuario.getDocumento());
     }
 
     public String validarIngreso(int index, String pass) {		
@@ -83,11 +92,10 @@ public class Coordinador {
         miLogin.dispose();
     }
 
-    public void asignarPrivilegios(String pass) {
-        UsuarioVo miUsuarioVo = miUsuarioDao.consultarUsuario(pass);
-        miVentana.asignarPrivilegios(miUsuarioVo.getTipo(), miUsuarioVo.getNombre());
-        miVentanaRegistro.asignarPrivilegios(miUsuarioVo.getTipo());
-        miVentanaConsultaIndividual.asignarPrivilegios(miUsuarioVo.getTipo(), pass);
+    public void asignarPrivilegios() {
+        miVentana.asignarPrivilegios(this.usuario.getTipo(), this.usuario.getNombre());
+        miVentanaRegistro.asignarPrivilegios(this.usuario.getTipo());
+        miVentanaConsultaIndividual.asignarPrivilegios(this.usuario.getTipo(), this.usuario.getDocumento());
     }
 
     public void mostrarLogin() {
