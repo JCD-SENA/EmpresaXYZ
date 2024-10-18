@@ -28,6 +28,7 @@ import controlador.Coordinador;
  */
 public class VentanaPrincipal extends JFrame implements ActionListener, WindowListener {
     private JButton botonConsultar, botonRegistrar, botonProductos, botonCarrito;
+    private JButton botonProductosLista, botonUsuariosLista;
     private JLabel labelTitulo,labelInferior;
     private JPanel miPanelPrincipal,panelTitulo,panelInferior;
     private JSeparator separador;
@@ -180,8 +181,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
             botonRegistrar.setVisible(false);
             botonCarrito.setVisible(true);
             botonProductos.setVisible(true);
-            botonConsultar.setBounds(20, 80, 190, 60);
-            botonCarrito.setBounds(230, 80, 190, 60);
+            botonConsultar.setBounds(230, 80, 190, 60);
+            botonCarrito.setBounds(20, 80, 190, 60);
         }
         labelTitulo.setText("Bienvenido : "+usuario);
     }
@@ -212,6 +213,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
 
         if (e.getSource()==botonConsultar) {
             miCoordinador.mostrarVentanaConsulta();			
+        }
+        
+        if (e.getSource()==botonCarrito) {
+            miCoordinador.mostrarVentanaCarrito();
         }
         
         if (e.getSource() == botonProductos) {

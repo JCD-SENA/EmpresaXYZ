@@ -2,6 +2,7 @@ D:\SENA\Java\xd\EmpresaXYZ\src\main\java\modelo\dao\ProductoDao.java
 D:\SENA\Java\xd\EmpresaXYZ\src\main\java\controlador\Principal.java
 D:\SENA\Java\xd\EmpresaXYZ\src\main\java\vista\VentanaRegistro.java
 D:\SENA\Java\xd\EmpresaXYZ\src\main\java\modelo\conexion\Conexion.java
+D:\SENA\Java\xd\EmpresaXYZ\src\main\java\modelo\Carrito.java
 D:\SENA\Java\xd\EmpresaXYZ\src\main\java\vista\VentanaConsultaIndividual.java
 D:\SENA\Java\xd\EmpresaXYZ\src\main\java\modelo\dao\UsuarioDao.java
 D:\SENA\Java\xd\EmpresaXYZ\src\main\java\vista\VentanaLogin.java
@@ -13,4 +14,4 @@ D:\SENA\Java\xd\EmpresaXYZ\src\main\java\controlador\Aplicacion.java
 D:\SENA\Java\xd\EmpresaXYZ\src\main\java\vista\VentanaProductos.java
 D:\SENA\Java\xd\EmpresaXYZ\src\main\java\modelo\vo\UsuarioVo.java
 D:\SENA\Java\xd\EmpresaXYZ\src\main\java\vista\VentanaRegistroProductos.java
-D:\SENA\Java\xd\EmpresaXYZ\src\main\java\controlador\Carrito.java
+D:\SENA\Java\xd\EmpresaXYZ\src\main\java\vista\VentanaCarrito.java

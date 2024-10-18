@@ -1,5 +1,4 @@
 vista\VentanaConsultaIndividual.class
-controlador\Carrito.class
 modelo\dao\UsuarioDao.class
 controlador\Principal.class
 modelo\conexion\Conexion.class
@@ -9,6 +8,8 @@ controlador\Coordinador.class
 vista\VentanaRegistro.class
 vista\VentanaRegistroProductos.class
 vista\VentanaProductos.class
+modelo\Carrito.class
+vista\VentanaCarrito.class
 modelo\dao\ProductoDao.class
 vista\VentanaLogin.class
 modelo\Logica.class

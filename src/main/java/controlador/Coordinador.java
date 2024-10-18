@@ -1,5 +1,6 @@
 package controlador;
 
+import modelo.Carrito;
 import modelo.Logica;
 import modelo.dao.UsuarioDao;
 import modelo.dao.ProductoDao;
@@ -12,6 +13,7 @@ import vista.VentanaPrincipal;
 import vista.VentanaRegistro;
 import vista.VentanaProductos;
 import vista.VentanaRegistroProductos;
+import vista.VentanaCarrito;
 
 public class Coordinador {
     private VentanaPrincipal miVentana;
@@ -26,6 +28,7 @@ public class Coordinador {
     private VentanaRegistroProductos miVentanaRegistroProductos;
     private Carrito miCarrito;
     private UsuarioVo usuario;
+    private VentanaCarrito miVentanaCarrito;
     
     public UsuarioVo getUsuario() {
         return this.usuario;
@@ -50,6 +53,10 @@ public class Coordinador {
     public Conexion getConexion () {
         return this.miConexion;
     }
+    
+    public void setVentanaCarrito(VentanaCarrito miVentanaCarrito) {
+        this.miVentanaCarrito = miVentanaCarrito;
+    }
 
     public void setVentanaProductos(VentanaProductos miVentanaProductos) {
         this.miVentanaProductos = miVentanaProductos;
@@ -57,6 +64,11 @@ public class Coordinador {
 
     public void setVentanaRegistroProductos(VentanaRegistroProductos miVentanaRegistroProductos) {
         this.miVentanaRegistroProductos = miVentanaRegistroProductos;
+    }
+    
+    public void mostrarVentanaCarrito() {
+        this.miVentanaCarrito.refrescar();
+        this.miVentanaCarrito.setVisible(true);
     }
 
     public void mostrarVentanaRegistroProductos() {

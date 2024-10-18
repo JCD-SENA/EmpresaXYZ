@@ -1,5 +1,6 @@
 package controlador;
 
+import modelo.Carrito;
 import modelo.Logica;
 import modelo.dao.UsuarioDao;
 import modelo.dao.ProductoDao;
@@ -11,6 +12,7 @@ import vista.VentanaPrincipal;
 import vista.VentanaRegistro;
 import vista.VentanaProductos;
 import vista.VentanaRegistroProductos;
+import vista.VentanaCarrito;
 
 public class Aplicacion {
     public void iniciarSistema(Conexion miConexion){
@@ -23,6 +25,7 @@ public class Aplicacion {
         VentanaConsultaIndividual miVentanaConsultaIndividual=new VentanaConsultaIndividual(miVentana, true);
         VentanaProductos miVentanaProductos = new VentanaProductos(miVentana, true);
         VentanaRegistroProductos miVentanaRegistroProductos = new VentanaRegistroProductos(miVentana, true);
+        VentanaCarrito miVentanaCarrito = new VentanaCarrito(miVentana, true);
         UsuarioDao miUsuarioDao=new UsuarioDao();
         ProductoDao miProductoDao=new ProductoDao();
         Carrito miCarrito = new Carrito();
@@ -38,6 +41,7 @@ public class Aplicacion {
         miVentanaProductos.setCoordinador(miCoordinador);
         miVentanaRegistroProductos.setCoordinador(miCoordinador);
         miCarrito.setCoordinador(miCoordinador);
+        miVentanaCarrito.setCoordinador(miCoordinador);
         
         //Relacionamos el Coordinador con las Clases
         miCoordinador.setVentanaPrincipal(miVentana);
@@ -50,6 +54,7 @@ public class Aplicacion {
         miCoordinador.setConexion(miConexion);
         miCoordinador.setVentanaProductos(miVentanaProductos);
         miCoordinador.setVentanaRegistroProductos(miVentanaRegistroProductos);
+        miCoordinador.setVentanaCarrito(miVentanaCarrito);
         miCoordinador.setCarrito(miCarrito);
 
         miVentana.setVisible(true);
