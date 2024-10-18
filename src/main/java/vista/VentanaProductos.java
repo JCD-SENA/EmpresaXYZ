@@ -197,5 +197,9 @@ public class VentanaProductos extends JDialog  implements ActionListener{
         if (e.getSource() == this.btnCarrito) {
             this.miCoordinador.mostrarVentanaCarrito();
         }
+        
+        if (e.getSource() == this.btnProductos) {
+            this.miCoordinador.mostrarVentanaListaProductos();
+        }
     }
 }

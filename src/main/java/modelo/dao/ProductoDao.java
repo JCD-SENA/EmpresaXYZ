@@ -1,5 +1,7 @@
 package modelo.dao;
 
+import java.util.ArrayList;
+
 import modelo.conexion.Conexion;
 import modelo.vo.ProductoVo;
 
@@ -43,6 +45,30 @@ public class ProductoDao {
         }
         
         return resultado;
+    }
+    
+    public ArrayList<ProductoVo> listar () {
+        ArrayList<ProductoVo> lista = new ArrayList<ProductoVo>();
+        try {
+            Connection connection=null;
+            Conexion miConexion= this.miCoordinador.getConexion();
+            PreparedStatement statement=null;
+            ResultSet result=null;
+            connection=miConexion.getConnection();
+            String consulta="SELECT idProducto from Producto";
+            if (connection!=null) {
+                statement=connection.prepareStatement(consulta);
+                result=statement.executeQuery();
+                while(result.next()==true){
+                    lista.add(this.consultarProducto(result.getString("idProducto")));
+                }
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            return null;
+        }
+        return lista;
     }
     
     public ProductoVo consultarProductoPorNombre(String nombre) {

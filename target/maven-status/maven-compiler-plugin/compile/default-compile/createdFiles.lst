@@ -1,5 +1,6 @@
 vista\VentanaConsultaIndividual.class
 modelo\dao\UsuarioDao.class
+vista\VentanaListaUsuarios.class
 controlador\Principal.class
 modelo\conexion\Conexion.class
 modelo\vo\ProductoVo.class
@@ -15,3 +16,4 @@ vista\VentanaLogin.class
 modelo\Logica.class
 vista\VentanaPrincipal.class
 controlador\Aplicacion.class
+vista\VentanaListaProductos.class

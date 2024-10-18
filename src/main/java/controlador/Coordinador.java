@@ -1,5 +1,7 @@
 package controlador;
 
+import java.util.ArrayList;
+
 import modelo.Carrito;
 import modelo.Logica;
 import modelo.dao.UsuarioDao;
@@ -14,6 +16,8 @@ import vista.VentanaRegistro;
 import vista.VentanaProductos;
 import vista.VentanaRegistroProductos;
 import vista.VentanaCarrito;
+import vista.VentanaListaProductos;
+import vista.VentanaListaUsuarios;
 
 public class Coordinador {
     private VentanaPrincipal miVentana;
@@ -26,9 +30,19 @@ public class Coordinador {
     private Conexion miConexion;
     private VentanaProductos miVentanaProductos;
     private VentanaRegistroProductos miVentanaRegistroProductos;
+    private VentanaListaUsuarios miVentanaListaUsuarios;
     private Carrito miCarrito;
     private UsuarioVo usuario;
     private VentanaCarrito miVentanaCarrito;
+    private VentanaListaProductos miVentanaListaProductos;
+    
+    public void setVentanaListaProductos(VentanaListaProductos miVentanaListaProductos) {
+        this.miVentanaListaProductos = miVentanaListaProductos;
+    }
+   
+    public void setVentanaListaUsuarios(VentanaListaUsuarios miVentanaListaUsuarios) {
+        this.miVentanaListaUsuarios = miVentanaListaUsuarios;
+    }
     
     public UsuarioVo getUsuario() {
         return this.usuario;
@@ -49,6 +63,18 @@ public class Coordinador {
     public void setConexion (Conexion miConexion) {
         this.miConexion = miConexion;
     }
+    
+    public ArrayList<ProductoVo> listarProductos() {
+        return this.miProductoDao.listar();
+    }
+    
+    public ArrayList<String> listarCarrito() {
+        return this.miCarrito.listar(this.usuario.getDocumento());
+    }
+    
+    public ArrayList<UsuarioVo> listarUsusarios() {
+        return this.miUsuarioDao.listar();
+    }
 
     public Conexion getConexion () {
         return this.miConexion;
@@ -64,6 +90,16 @@ public class Coordinador {
 
     public void setVentanaRegistroProductos(VentanaRegistroProductos miVentanaRegistroProductos) {
         this.miVentanaRegistroProductos = miVentanaRegistroProductos;
+    }
+    
+    public void mostrarVentanaListaProductos () {
+        this.miVentanaListaProductos.refrescar();
+        this.miVentanaListaProductos.setVisible(true);
+    }
+    
+    public void MostrarVentanaListaUsuarios () {
+        this.miVentanaListaUsuarios.refrescar();
+        this.miVentanaListaUsuarios.setVisible(true);
     }
     
     public void mostrarVentanaCarrito() {

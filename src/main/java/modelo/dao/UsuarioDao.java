@@ -22,6 +22,30 @@ public class UsuarioDao {
         this.miCoordinador=miCoordinador;
     }
 
+    public ArrayList<UsuarioVo> listar () {
+        ArrayList<UsuarioVo> lista = new ArrayList<UsuarioVo>();
+        try {
+            Connection connection=null;
+            Conexion miConexion= this.miCoordinador.getConexion();
+            PreparedStatement statement=null;
+            ResultSet result=null;
+            connection=miConexion.getConnection();
+            String consulta="SELECT documento from usuario";
+            if (connection!=null) {
+                statement=connection.prepareStatement(consulta);
+                result=statement.executeQuery();
+                while(result.next()==true){
+                    lista.add(this.consultarUsuario(result.getString("documento")));
+                }
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            return null;
+        }
+        return lista;
+    }
+    
     public String registrarUsuario(UsuarioVo miUsuarioVo) {
         String resultado="";
 

@@ -1,34 +1,35 @@
 package vista;
 
-import java.util.ArrayList;
-
 import controlador.Coordinador;
+import modelo.vo.ProductoVo;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Font;
 import java.awt.Frame;
 
+import java.util.ArrayList;
+
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.JList;
+import javax.swing.JTable;
 import javax.swing.JScrollPane;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
-public class VentanaCarrito extends JDialog  implements ActionListener{
+public class VentanaListaProductos extends JDialog  implements ActionListener{
     private Coordinador miCoordinador;
     
-    private JPanel panelCarrito;
+    private JPanel panelLista;
     private JLabel lblTitulo;
     private JButton btnRefrescar;
-    private JList listaCompras;
+    private JTable listaProductos;
     private JScrollPane escroleable;
-    private DefaultListModel modelo;
+    private DefaultTableModel modelo;
     
-    public VentanaCarrito(Frame parent, boolean modal) {
+    public VentanaListaProductos(Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setSize(500,320);
@@ -37,59 +38,58 @@ public class VentanaCarrito extends JDialog  implements ActionListener{
     }
     
     private void initComponents() {
-        panelCarrito = new JPanel();
+        panelLista = new JPanel();
         lblTitulo = new JLabel();
         btnRefrescar = new JButton();
-        listaCompras = new JList();
         escroleable = new JScrollPane();
-        modelo = new DefaultListModel();
+
+        String[] header = {"ID", "Nombre", "Precio", "Cantidad"};
+        modelo = new DefaultTableModel(null, header);
+        listaProductos = new JTable(modelo);
         
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        panelCarrito.setBackground(new java.awt.Color(204, 204, 204));
-        panelCarrito.setLayout(null);
+        panelLista.setBackground(new java.awt.Color(204, 204, 204));
+        panelLista.setLayout(null);
         
         btnRefrescar.setFont(new Font("Verdana", 0, 14));
         btnRefrescar.setText("Refrescar");
-        panelCarrito.add(btnRefrescar);
+        panelLista.add(btnRefrescar);
         btnRefrescar.setBounds(170, 80, 150, 25);
         btnRefrescar.addActionListener(this);
         
         lblTitulo.setFont(new Font("Tempus Sans ITC", 1, 36));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("Carrito");
+        lblTitulo.setText("Lista de productos");
         lblTitulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        panelCarrito.add(lblTitulo);
+        panelLista.add(lblTitulo);
         lblTitulo.setBounds(20, 10, 440, 60);
 
-        escroleable.setViewportView(listaCompras);
-        listaCompras.setLayoutOrientation(JList.VERTICAL);
-        listaCompras.setModel(modelo);
-        panelCarrito.add(escroleable);
+        escroleable.setViewportView(listaProductos);
+        panelLista.add(escroleable);
         escroleable.setBounds(20, 115, 440, 130);
         
-        getContentPane().add(panelCarrito);
-        panelCarrito.setBounds(0, 0, 500, 350);
+        getContentPane().add(panelLista);
+        panelLista.setBounds(0, 0, 500, 350);
         pack();
+    }
+    
+    public void refrescar() {
+        ArrayList<ProductoVo> productos = this.miCoordinador.listarProductos();
+        this.modelo.setRowCount(0);
+        if (productos!=null) {
+            if (productos.size() > 0) {
+                for (ProductoVo producto : productos) {
+                    String[] info = {producto.getIdProducto(), producto.getNombre(), Integer.toString(producto.getPrecio()), Integer.toString(producto.getCantidad())};
+                    this.modelo.addRow(info);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al cargar la lista de productos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     public void setCoordinador(Coordinador miCoordinador) {
         this.miCoordinador=miCoordinador;
-    }
-    
-    public void refrescar() {
-        ArrayList<String> compras = this.miCoordinador.listarCarrito();
-        if (compras != null) {
-            this.modelo.clear();
-            if (compras.size() > 0) {
-                for (String producto : compras) {
-                    this.modelo.addElement(producto);
-                }
-            } else {
-                this.modelo.addElement("No hay productos comprados");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error al cargar la lista de productos comprados", "Error", JOptionPane.ERROR_MESSAGE);
-        }
     }
     
     @Override

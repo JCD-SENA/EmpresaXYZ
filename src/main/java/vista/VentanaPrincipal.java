@@ -79,6 +79,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
         botonConsultar = new JButton();
         botonRegistrar = new JButton();
         botonProductos = new JButton();
+        botonRegistrar = new JButton();
+        botonProductosLista = new JButton();
+        botonUsuariosLista = new JButton();
         botonCarrito = new JButton();
         separador = new JSeparator();
         
@@ -134,6 +137,18 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
         botonCarrito.setBounds(650, 80, 190, 60);
         botonCarrito.addActionListener(this);
         
+        botonProductosLista.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        botonProductosLista.setText("Lista de productos");
+        miPanelPrincipal.add(botonProductosLista);
+        botonProductosLista.setBounds(20, 155, 230, 50);
+        botonProductosLista.addActionListener(this);
+        
+        botonUsuariosLista.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        botonUsuariosLista.setText("Lista de usuarios");
+        miPanelPrincipal.add(botonUsuariosLista);
+        botonUsuariosLista.setBounds(270, 155, 230, 50);
+        botonUsuariosLista.addActionListener(this);
+        
         barraMenu =new JMenuBar();
         menu=new JMenu();
         itemOpciones =new JMenuItem();
@@ -154,6 +169,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
         botonRegistrar.setVisible(false);
         botonProductos.setVisible(false);
         botonCarrito.setVisible(false);
+        botonUsuariosLista.setVisible(false);
+        botonProductosLista.setVisible(false);
         
         panelInferior.setBounds(0, this.largo - 130, this.ancho,53);
         miPanelPrincipal.add(panelTitulo);
@@ -168,6 +185,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
 
     public void asignarPrivilegios(int tipo, String usuario) {
         this.privilegios = tipo;
+        botonUsuariosLista.setVisible(true);
+        botonProductosLista.setVisible(true);
         if (tipo == 1 || tipo == 3) {
             botonConsultar.setVisible(true);
             botonRegistrar.setVisible(true);
@@ -217,6 +236,14 @@ public class VentanaPrincipal extends JFrame implements ActionListener, WindowLi
         
         if (e.getSource()==botonCarrito) {
             miCoordinador.mostrarVentanaCarrito();
+        }
+        
+        if (e.getSource()==botonUsuariosLista) {
+            miCoordinador.MostrarVentanaListaUsuarios();
+        }
+        
+        if (e.getSource()==botonProductosLista) {
+            miCoordinador.mostrarVentanaListaProductos();
         }
         
         if (e.getSource() == botonProductos) {

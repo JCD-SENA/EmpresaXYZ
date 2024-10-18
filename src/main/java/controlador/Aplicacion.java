@@ -12,6 +12,8 @@ import vista.VentanaPrincipal;
 import vista.VentanaRegistro;
 import vista.VentanaProductos;
 import vista.VentanaRegistroProductos;
+import vista.VentanaListaProductos;
+import vista.VentanaListaUsuarios;
 import vista.VentanaCarrito;
 
 public class Aplicacion {
@@ -26,6 +28,8 @@ public class Aplicacion {
         VentanaProductos miVentanaProductos = new VentanaProductos(miVentana, true);
         VentanaRegistroProductos miVentanaRegistroProductos = new VentanaRegistroProductos(miVentana, true);
         VentanaCarrito miVentanaCarrito = new VentanaCarrito(miVentana, true);
+        VentanaListaProductos miVentanaListaProductos = new VentanaListaProductos(miVentana, true);
+        VentanaListaUsuarios miVentanaListaUsuarios = new VentanaListaUsuarios(miVentana, true);
         UsuarioDao miUsuarioDao=new UsuarioDao();
         ProductoDao miProductoDao=new ProductoDao();
         Carrito miCarrito = new Carrito();
@@ -42,6 +46,8 @@ public class Aplicacion {
         miVentanaRegistroProductos.setCoordinador(miCoordinador);
         miCarrito.setCoordinador(miCoordinador);
         miVentanaCarrito.setCoordinador(miCoordinador);
+        miVentanaListaProductos.setCoordinador(miCoordinador);
+        miVentanaListaUsuarios.setCoordinador(miCoordinador);
         
         //Relacionamos el Coordinador con las Clases
         miCoordinador.setVentanaPrincipal(miVentana);
@@ -55,6 +61,8 @@ public class Aplicacion {
         miCoordinador.setVentanaProductos(miVentanaProductos);
         miCoordinador.setVentanaRegistroProductos(miVentanaRegistroProductos);
         miCoordinador.setVentanaCarrito(miVentanaCarrito);
+        miCoordinador.setVentanaListaProductos(miVentanaListaProductos);
+        miCoordinador.setVentanaListaUsuarios(miVentanaListaUsuarios);
         miCoordinador.setCarrito(miCarrito);
 
         miVentana.setVisible(true);
