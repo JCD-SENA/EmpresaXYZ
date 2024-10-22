@@ -270,6 +270,39 @@ public class VentanaConsultaIndividual extends JDialog implements ActionListener
                 campoNombre.setForeground(Color.black);
                 btonEliminar.setText("Desactivar");
             }
+            if (this.miCoordinador.esMiUsuario(usuarioVO.getDocumento())) {
+                btonActualizar.setVisible(true);
+                btonEliminar.setVisible(true);
+                campoTelefono.setEditable(true);
+                campoDireccion.setEditable(true);
+                campoEdad.setEditable(true);
+                campoNombre.setEditable(true);
+                campoProfesion.setEditable(true);
+            } else {
+                if (this.tipoUsuario != 1) {
+                    if (this.tipoUsuario == 2){
+                        btonActualizar.setVisible(false);
+                        btonEliminar.setVisible(false);
+                        campoTelefono.setEditable(false);
+                        campoDireccion.setEditable(false);
+                        campoDocumento.setEditable(false);
+                        campoEdad.setEditable(false);
+                        campoNombre.setEditable(false);
+                        campoProfesion.setEditable(false);
+                        comboTipo.setEnabled(false);
+                    } else if (this.tipoUsuario == 3) {
+                        btonActualizar.setVisible(false);
+                        btonEliminar.setVisible(false);
+                        campoTelefono.setEditable(false);
+                        campoDireccion.setEditable(false);
+                        campoDocumento.setEditable(false);
+                        campoEdad.setEditable(false);
+                        campoNombre.setEditable(false);
+                        campoProfesion.setEditable(false);
+                        comboTipo.setEnabled(false);
+                    }
+                }
+            }
         }else{
             JOptionPane.showMessageDialog(null, "El usuario no se encuentra registrado en el sistema", "Datos Inexistentes",JOptionPane.WARNING_MESSAGE);
         }		

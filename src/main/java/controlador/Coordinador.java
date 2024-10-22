@@ -235,4 +235,8 @@ public class Coordinador {
     public String activarUsuario(String documento) {
         return miUsuarioDao.activarUsuario(documento);
     }
+    
+    public boolean esMiUsuario (String documento) {
+        return this.usuario.getDocumento().equals(documento);
+    }
 }
